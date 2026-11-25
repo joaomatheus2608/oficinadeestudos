@@ -1,4 +1,5 @@
 {
+  "outputDirectory": ".",
   "cleanUrls": false,
   "redirects": [
     { "source": "/admin", "destination": "/admin/login.html", "permanent": false },
