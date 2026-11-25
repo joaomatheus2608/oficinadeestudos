@@ -173,7 +173,7 @@ serve(async (req: Request) => {
     // 2. Verify active campaign
     const { data: campaign, error: campError } = await supabase
       .from("campaigns")
-      .select("id, name, title, material_url, email_subject, email_content, is_active")
+      .select("id, name, title, material_url, email_subject, email_content, is_active, block_duplicates")
       .eq("id", campaignId)
       .eq("is_active", true)
       .maybeSingle();
@@ -182,17 +182,34 @@ serve(async (req: Request) => {
       return reply({ error: "Nenhuma campanha ativa encontrada." }, 404);
     }
 
-    // 3. Check duplicate lead for same email + campaign
+    // 3. Anti-flood: check duplicate email OR WhatsApp in the SAME campaign
     let leadId: string;
-    const { data: existingLead } = await supabase
+    const phoneDigits = phone.replace(/\D/g, "");
+    const { data: existingByEmail } = await supabase
       .from("leads")
       .select("id")
       .eq("campaign_id", campaign.id)
       .ilike("email", email)
       .maybeSingle();
 
+    const { data: existingByPhone } = await supabase
+      .from("leads")
+      .select("id")
+      .eq("campaign_id", campaign.id)
+      .eq("phone_digits", phoneDigits)
+      .maybeSingle();
+
+    const existingLead = existingByEmail ?? existingByPhone;
+
     if (existingLead) {
-      // Check if already sent recently (anti-spam / accidental double send)
+      if (campaign.block_duplicates !== false) {
+        return reply(
+          { error: "Este e-mail ou WhatsApp já solicitou o material desta campanha." },
+          409
+        );
+      }
+
+      // If campaign allows duplicates, avoid accidental double-click within active sends
       const { data: existingSend } = await supabase
         .from("email_sends")
         .select("id, status, created_at")
@@ -202,10 +219,10 @@ serve(async (req: Request) => {
         .limit(1)
         .maybeSingle();
 
-      if (existingSend && ["sent", "delivered", "processing"].includes(existingSend.status)) {
+      if (existingSend && existingSend.status === "processing") {
         return reply({
           ok: true,
-          message: "Este e-mail já recebeu o material desta campanha. Verifique sua caixa de entrada e spam.",
+          message: "Seu envio já está sendo processado. Verifique sua caixa de entrada.",
         });
       }
       leadId = existingLead.id;

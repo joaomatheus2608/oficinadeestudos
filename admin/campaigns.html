@@ -126,6 +126,16 @@
           <textarea id="c-email-content" class="form-control" rows="4" placeholder="Olá {nome}, obrigada por se cadastrar! Segue o link para acessar o material…"></textarea>
           <p class="form-hint">Use <code>{nome}</code> para personalizar com o nome do destinatário.</p>
         </div>
+        <div class="form-group">
+          <label>Proteção Anti-Flood (por campanha)</label>
+          <div class="toggle-wrap" style="margin-top:.4rem;">
+            <label class="toggle">
+              <input type="checkbox" id="c-block-duplicates" checked />
+              <span class="toggle__slider"></span>
+            </label>
+            <span style="font-size:.86rem;color:var(--gray-text);">Bloquear e-mail ou WhatsApp repetido nesta campanha</span>
+          </div>
+        </div>
         <div class="form-row">
           <div class="form-group">
             <label>Imagem de apresentação</label>
@@ -225,11 +235,20 @@
   setupFileUpload('c-image', 'image-upload-area', 'image-preview', 'image-filename', 'clear-image');
   setupFileUpload('c-material', 'material-upload-area', 'material-preview', 'material-filename', 'clear-material');
 
+  let leadCounts = {};
+
   // ---- Load campaigns ----
   async function loadCampaigns() {
-    const { data, error } = await sb.from('campaigns').select('*').order('created_at', { ascending: false });
+    const [{ data, error }, { data: leadsData }] = await Promise.all([
+      sb.from('campaigns').select('*').order('created_at', { ascending: false }),
+      sb.from('leads').select('campaign_id'),
+    ]);
     if (error) { toast('Erro ao carregar campanhas: ' + error.message, 'error'); return; }
     campaigns = data || [];
+    leadCounts = {};
+    (leadsData || []).forEach(l => {
+      leadCounts[l.campaign_id] = (leadCounts[l.campaign_id] || 0) + 1;
+    });
     renderCampaigns();
 
     const active = campaigns.find(c => c.is_active);
@@ -252,25 +271,33 @@
       </div>`;
       return;
     }
-    grid.innerHTML = campaigns.map(c => `
+    grid.innerHTML = campaigns.map(c => {
+      const count = leadCounts[c.id] || 0;
+      const antiFloodOn = c.block_duplicates !== false;
+      return `
       <div class="campaign-card">
         <div class="campaign-card__status-bar campaign-card__status-bar--${c.is_active ? 'active' : 'inactive'}"></div>
         <div class="campaign-card__body">
           <div class="campaign-card__meta">
             ${statusBadge(c.is_active ? 'active' : 'inactive')}
             <span style="font-size:.75rem;color:var(--gray-text);">${fmtDateOnly(c.created_at)}</span>
+            <span style="margin-left:auto;font-size:.75rem;font-weight:700;color:var(--blue-deep);background:var(--gray-light);padding:.2em .6em;border-radius:999px;">${count} lead${count !== 1 ? 's' : ''}</span>
           </div>
           <h3 class="campaign-card__name">${c.name}</h3>
           <p class="campaign-card__title">${c.title}</p>
           <p style="font-size:.82rem;color:var(--gray-text);line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${c.description || ''}</p>
-          ${c.material_url ? `<div style="margin-top:.75rem;font-size:.8rem;color:var(--success);display:flex;align-items:center;gap:.3rem;"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Material carregado</div>` : `<div style="margin-top:.75rem;font-size:.8rem;color:var(--warning);display:flex;align-items:center;gap:.3rem;"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Sem material</div>`}
+          <div style="margin-top:.75rem;display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;">
+            ${c.material_url ? `<span style="font-size:.78rem;color:var(--success);display:inline-flex;align-items:center;gap:.25rem;"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Material</span>` : `<span style="font-size:.78rem;color:var(--warning);">Sem material</span>`}
+            <span style="font-size:.78rem;color:${antiFloodOn ? 'var(--blue)' : 'var(--gray-text)'};">${antiFloodOn ? '🛡️ Anti-flood ativo' : '🔓 Repetição liberada'}</span>
+          </div>
         </div>
         <div class="campaign-card__footer">
+          <a href="leads.html?campaign=${c.id}" class="btn btn--sm btn--primary" style="margin-right:auto;">Ver Leads (${count})</a>
           ${!c.is_active ? `<button class="btn btn--sm btn--outline" onclick="activateCampaign('${c.id}')">Ativar</button>` : `<button class="btn btn--sm btn--ghost" onclick="deactivateCampaign('${c.id}')">Desativar</button>`}
           <button class="btn btn--sm btn--ghost" onclick="editCampaign('${c.id}')">Editar</button>
         </div>
       </div>
-    `).join('');
+    `}).join('');
   }
 
   // ---- Modal ----
@@ -296,6 +323,7 @@
     document.getElementById('image-upload-area').style.display = '';
     document.getElementById('material-preview').style.display = 'none';
     document.getElementById('material-upload-area').style.display = '';
+    document.getElementById('c-block-duplicates').checked = true;
     activeLabel.textContent = 'Inativa';
     editingId = null;
   }
@@ -322,6 +350,7 @@
     document.getElementById('c-email-subject').value = c.email_subject || '';
     document.getElementById('c-email-content').value = c.email_content || '';
     document.getElementById('c-active').checked      = c.is_active;
+    document.getElementById('c-block-duplicates').checked = c.block_duplicates !== false;
     document.getElementById('c-image-url').value     = c.image_url || '';
     document.getElementById('c-material-url').value  = c.material_url || '';
     activeLabel.textContent = c.is_active ? 'Ativa (exibida na landing page)' : 'Inativa';
@@ -422,7 +451,8 @@
     const desc         = document.getElementById('c-desc').value.trim();
     const emailSubject = document.getElementById('c-email-subject').value.trim();
     const emailContent = document.getElementById('c-email-content').value.trim();
-    const isActive     = document.getElementById('c-active').checked;
+    const isActive        = document.getElementById('c-active').checked;
+    const blockDuplicates = document.getElementById('c-block-duplicates').checked;
     let imageUrl       = document.getElementById('c-image-url').value;
     let materialUrl    = document.getElementById('c-material-url').value;
 
@@ -470,6 +500,7 @@
         email_subject: emailSubject,
         email_content: emailContent,
         is_active: isActive,
+        block_duplicates: blockDuplicates,
         image_url: imageUrl || null,
         material_url: materialUrl || null,
         updated_at: new Date().toISOString(),

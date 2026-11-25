@@ -171,6 +171,11 @@
       opt.value = c.id; opt.textContent = c.name;
       sel.appendChild(opt);
     });
+
+    const urlCampId = new URLSearchParams(window.location.search).get('campaign');
+    if (urlCampId) {
+      sel.value = urlCampId;
+    }
   }
 
   // ---- Load leads ----
@@ -204,7 +209,9 @@
       return matchSearch && matchCampaign && matchStatus && matchFrom && matchTo;
     });
 
-    document.getElementById('leads-count-desc').textContent = `${filtered.length} lead${filtered.length !== 1 ? 's' : ''} encontrado${filtered.length !== 1 ? 's' : ''}`;
+    const selectedCamp = campaigns.find(c => c.id === campaign);
+    const campSuffix = selectedCamp ? ` na campanha "${selectedCamp.name}"` : '';
+    document.getElementById('leads-count-desc').textContent = `${filtered.length} lead${filtered.length !== 1 ? 's' : ''} encontrado${filtered.length !== 1 ? 's' : ''}${campSuffix}`;
     currentPage = 1;
     renderPage();
   }
