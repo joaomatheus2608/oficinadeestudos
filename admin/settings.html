@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configurações — Painel Oficina de Estudos</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/admin.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>window.__ENV = { SUPABASE_URL: 'https://qliosdkejhnxybrluriw.supabase.co', SUPABASE_ANON_KEY: 'sb_publishable__JOFD8fFD995D2517MRJAQ_WTJlFi30' };</script>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__logo"><svg viewBox="0 0 60 60" fill="none"><path d="M30 8L6 26v4h4v22h40V30h4v-4L30 8z" fill="#F5C52B"/><circle cx="30" cy="38" r="4" fill="#F5C52B"/><rect x="22" y="48" width="16" height="4" rx="1" fill="#F5C52B"/></svg><div class="sidebar__logo-text"><span>Oficina de</span><span><strong>ESTUDOS</strong></span></div></div>
+    <nav class="sidebar__nav">
+      <span class="nav-section-label">Principal</span>
+      <button class="nav-link" onclick="location.href='index.html'"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>Dashboard</button>
+      <button class="nav-link" onclick="location.href='campaigns.html'"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg>Campanhas</button>
+      <button class="nav-link" onclick="location.href='leads.html'"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Leads</button>
+      <button class="nav-link" onclick="location.href='sends.html'"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>Histórico de Envios</button>
+      <span class="nav-section-label">Sistema</span>
+      <button class="nav-link active" onclick="location.href='settings.html'"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Configurações</button>
+      <button class="nav-link" id="signout-btn"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>Sair</button>
+    </nav>
+    <div class="sidebar__footer"><strong id="sidebar-user-email">—</strong>Painel Administrativo</div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <div class="admin-topbar__left">
+        <button class="topbar-menu-btn" id="topbar-menu-btn"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        <div><div class="admin-topbar__title">Configurações</div><div class="admin-topbar__subtitle">Conta e preferências do sistema</div></div>
+      </div>
+      <div class="admin-topbar__right">
+        <div class="topbar-user"><div class="topbar-user__avatar" id="user-avatar">?</div><span id="topbar-user-name">—</span></div>
+      </div>
+    </div>
+
+    <div class="admin-content">
+      <div style="max-width:720px;">
+        <h1 class="page-header__title" style="color:var(--blue);margin-bottom:1.5rem;">Configurações</h1>
+
+        <!-- Account -->
+        <div class="card" style="margin-bottom:1.5rem;">
+          <div class="card__header"><span class="card__title">Conta administrativa</span></div>
+          <div class="card__body">
+            <div class="admin-form">
+              <div class="form-group">
+                <label>E-mail atual</label>
+                <input type="email" id="settings-email" class="form-control" readonly style="background:var(--gray-light);" />
+              </div>
+            </div>
+            <div class="alert alert--info" style="margin-top:1rem;">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Para alterar e-mail ou senha, acesse o painel do Supabase ou utilize a recuperação de senha.
+            </div>
+          </div>
+        </div>
+
+        <!-- Change Password -->
+        <div class="card" style="margin-bottom:1.5rem;">
+          <div class="card__header"><span class="card__title">Alterar senha</span></div>
+          <div class="card__body">
+            <div id="pass-alert" class="alert" style="display:none;margin-bottom:1rem;"></div>
+            <div class="admin-form">
+              <div class="form-group">
+                <label for="new-password">Nova senha</label>
+                <input type="password" id="new-password" class="form-control" placeholder="Mínimo 8 caracteres" autocomplete="new-password" />
+              </div>
+              <div class="form-group">
+                <label for="confirm-password">Confirmar nova senha</label>
+                <input type="password" id="confirm-password" class="form-control" placeholder="Repita a nova senha" autocomplete="new-password" />
+              </div>
+            </div>
+            <button class="btn btn--blue" id="change-pass-btn">Alterar Senha</button>
+          </div>
+        </div>
+
+        <!-- LGPD / Data Deletion -->
+        <div class="card" style="margin-bottom:1.5rem;">
+          <div class="card__header"><span class="card__title">Conformidade LGPD</span></div>
+          <div class="card__body">
+            <p style="color:var(--gray-text);font-size:.9rem;margin-bottom:1rem;">
+              Solicitações de exclusão de dados devem ser atendidas em até 15 dias úteis.
+              Para excluir um lead específico, acesse a aba <strong>Leads</strong> e solicite a remoção individual.
+            </p>
+            <div class="alert alert--warning">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              A exclusão de dados é irreversível. Sempre faça um backup (exportação CSV) antes.
+            </div>
+          </div>
+        </div>
+
+        <!-- System Info -->
+        <div class="card">
+          <div class="card__header"><span class="card__title">Informações do sistema</span></div>
+          <div class="card__body">
+            <div class="lead-info-grid">
+              <div class="lead-info-item"><div class="lead-info-item__label">Plataforma</div><div class="lead-info-item__value">Oficina de Estudos v1.0</div></div>
+              <div class="lead-info-item"><div class="lead-info-item__label">Banco de dados</div><div class="lead-info-item__value">Supabase (PostgreSQL)</div></div>
+              <div class="lead-info-item"><div class="lead-info-item__label">Envio de e-mails</div><div class="lead-info-item__value">Resend API</div></div>
+              <div class="lead-info-item"><div class="lead-info-item__label">Armazenamento</div><div class="lead-info-item__value">Supabase Storage</div></div>
+              <div class="lead-info-item"><div class="lead-info-item__label">Autenticação</div><div class="lead-info-item__value">Supabase Auth</div></div>
+              <div class="lead-info-item"><div class="lead-info-item__label">Conformidade</div><div class="lead-info-item__value">LGPD (Lei 13.709/2018)</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/admin-utils.js"></script>
+<script>
+(async function() {
+  const session = await requireAuth();
+  if (!session) return;
+
+  const email = session.user.email;
+  document.getElementById('sidebar-user-email').textContent = email;
+  document.getElementById('topbar-user-name').textContent   = email.split('@')[0];
+  document.getElementById('user-avatar').textContent = email[0]?.toUpperCase();
+  document.getElementById('settings-email').value = email;
+  initSidebar();
+
+  const sb = getSB();
+
+  document.getElementById('change-pass-btn').addEventListener('click', async () => {
+    const np = document.getElementById('new-password').value;
+    const cp = document.getElementById('confirm-password').value;
+    const alertEl = document.getElementById('pass-alert');
+
+    if (!np || np.length < 8) {
+      alertEl.className = 'alert alert--error'; alertEl.style.display = '';
+      alertEl.textContent = 'A senha deve ter no mínimo 8 caracteres.'; return;
+    }
+    if (np !== cp) {
+      alertEl.className = 'alert alert--error'; alertEl.style.display = '';
+      alertEl.textContent = 'As senhas não coincidem.'; return;
+    }
+
+    const { error } = await sb.auth.updateUser({ password: np });
+    if (error) {
+      alertEl.className = 'alert alert--error'; alertEl.style.display = '';
+      alertEl.textContent = 'Erro ao alterar senha: ' + error.message;
+    } else {
+      alertEl.className = 'alert alert--success'; alertEl.style.display = '';
+      alertEl.textContent = '✅ Senha alterada com sucesso!';
+      document.getElementById('new-password').value = '';
+      document.getElementById('confirm-password').value = '';
+    }
+  });
+})();
+</script>
+</body>
+</html>

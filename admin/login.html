@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — Painel Oficina de Estudos</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/admin.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+    window.__ENV = {
+      SUPABASE_URL: 'https://qliosdkejhnxybrluriw.supabase.co',
+      SUPABASE_ANON_KEY: 'sb_publishable__JOFD8fFD995D2517MRJAQ_WTJlFi30',
+    };
+  </script>
+</head>
+<body>
+
+<div class="login-page">
+  <!-- Visual panel -->
+  <div class="login-visual" aria-hidden="true">
+    <div class="login-visual__logo">
+      <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 8L6 26v4h4v22h40V30h4v-4L30 8z" fill="#F5C52B"/>
+        <circle cx="30" cy="38" r="8" fill="white" fill-opacity=".15"/>
+        <circle cx="30" cy="38" r="8" fill="none" stroke="white" stroke-width="2"/>
+        <circle cx="30" cy="38" r="4" fill="#F5C52B"/>
+        <rect x="28.5" y="28" width="3" height="4" rx="1" fill="white"/>
+        <rect x="28.5" y="44" width="3" height="4" rx="1" fill="white"/>
+        <rect x="20" y="36.5" width="4" height="3" rx="1" fill="white"/>
+        <rect x="36" y="36.5" width="4" height="3" rx="1" fill="white"/>
+        <rect x="22" y="48" width="16" height="4" rx="1" fill="#F5C52B"/>
+      </svg>
+      <div class="login-visual__logo-text">
+        <span style="font-size:.8rem;opacity:.7;">Oficina de</span>
+        <span style="font-size:1.5rem;font-weight:800;color:#fff;"><strong style="color:#F5C52B;">ESTUDOS</strong></span>
+      </div>
+    </div>
+    <h2 class="login-visual__title">Painel <strong>Administrativo</strong></h2>
+    <p class="login-visual__desc">
+      Gerencie campanhas, acompanhe leads e envie materiais com facilidade.
+    </p>
+    <!-- Decorative stats -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;width:100%;max-width:300px;z-index:1;">
+      <div style="background:rgba(255,255,255,.1);border-radius:10px;padding:1rem;text-align:center;">
+        <div style="font-size:1.6rem;font-weight:800;color:#F5C52B;">∞</div>
+        <div style="font-size:.78rem;opacity:.7;">Campanhas</div>
+      </div>
+      <div style="background:rgba(255,255,255,.1);border-radius:10px;padding:1rem;text-align:center;">
+        <div style="font-size:1.6rem;font-weight:800;color:#F5C52B;">📧</div>
+        <div style="font-size:.78rem;opacity:.7;">Envios automáticos</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form panel -->
+  <div class="login-form-panel">
+    <div class="login-form-wrap">
+      <h2>Bem-vinda de volta</h2>
+      <p>Faça login para acessar o painel de gestão.</p>
+
+      <div id="login-alert" class="alert alert--error alert--hidden" role="alert">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="flex-shrink:0;">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span id="login-alert-msg">Credenciais inválidas.</span>
+      </div>
+
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label for="login-email">E-mail</label>
+          <input type="email" id="login-email" class="form-control" placeholder="admin@oficinadeestudos.com.br" autocomplete="email" required />
+        </div>
+        <div class="form-group">
+          <label for="login-password">Senha</label>
+          <div style="position:relative;">
+            <input type="password" id="login-password" class="form-control" placeholder="••••••••" autocomplete="current-password" required style="padding-right:3rem;" />
+            <button type="button" id="toggle-password" aria-label="Mostrar/ocultar senha"
+              style="position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--gray-text);">
+              <svg id="eye-icon" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn--blue btn--full" id="login-btn" style="margin-top:1.5rem;padding:1rem;">
+          <span id="login-btn-text">Entrar no Painel</span>
+          <span id="login-spinner" class="spinner" style="display:none;"></span>
+        </button>
+      </form>
+
+      <p style="margin-top:1.5rem;font-size:.82rem;text-align:center;color:var(--gray-text);">
+        Acesso restrito à equipe da Oficina de Estudos.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const SUPABASE_URL = window.__ENV.SUPABASE_URL;
+  const SUPABASE_ANON_KEY = window.__ENV.SUPABASE_ANON_KEY;
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  sb.auth.getSession().then(({ data }) => {
+    if (data.session) {
+      window.location.href = 'index.html';
+    }
+  });
+
+  const form       = document.getElementById('login-form');
+  const emailField = document.getElementById('login-email');
+  const passField  = document.getElementById('login-password');
+  const alertBox   = document.getElementById('login-alert');
+  const alertMsg   = document.getElementById('login-alert-msg');
+  const loginBtn   = document.getElementById('login-btn');
+  const loginBtnTxt= document.getElementById('login-btn-text');
+  const spinner    = document.getElementById('login-spinner');
+  const togglePass = document.getElementById('toggle-password');
+
+  togglePass.addEventListener('click', () => {
+    const type = passField.type === 'password' ? 'text' : 'password';
+    passField.type = type;
+    togglePass.setAttribute('aria-label', type === 'password' ? 'Mostrar senha' : 'Ocultar senha');
+  });
+
+  function showAlert(msg) {
+    alertMsg.textContent = msg;
+    alertBox.classList.remove('alert--hidden');
+  }
+  function hideAlert() {
+    alertBox.classList.add('alert--hidden');
+  }
+  function setLoading(loading) {
+    loginBtn.disabled = loading;
+    loginBtnTxt.textContent = loading ? 'Entrando...' : 'Entrar no Painel';
+    spinner.style.display = loading ? '' : 'none';
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideAlert();
+    const email = emailField.value.trim();
+    const pass  = passField.value;
+    if (!email || !pass) { showAlert('Preencha e-mail e senha.'); return; }
+
+    setLoading(true);
+    try {
+      const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+      if (error) {
+        const msgs = {
+          'Invalid login credentials': 'E-mail ou senha inválidos.',
+          'Email not confirmed':       'Confirme seu e-mail antes de entrar.',
+          'Too many requests':         'Muitas tentativas. Aguarde e tente novamente.',
+        };
+        showAlert(msgs[error.message] || error.message);
+        return;
+      }
+      localStorage.removeItem('oe_demo_admin');
+      window.location.href = 'index.html';
+    } catch (err) {
+      showAlert('Erro de conexão. Verifique sua internet.');
+    } finally {
+      setLoading(false);
+    }
+  });
+})();
+</script>
+</body>
+</html>

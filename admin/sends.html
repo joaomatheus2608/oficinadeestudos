@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Histórico de Envios — Painel Oficina de Estudos</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/admin.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>window.__ENV = { SUPABASE_URL: 'https://qliosdkejhnxybrluriw.supabase.co', SUPABASE_ANON_KEY: 'sb_publishable__JOFD8fFD995D2517MRJAQ_WTJlFi30' };</script>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__logo"><svg viewBox="0 0 60 60" fill="none"><path d="M30 8L6 26v4h4v22h40V30h4v-4L30 8z" fill="#F5C52B"/><circle cx="30" cy="38" r="4" fill="#F5C52B"/><rect x="22" y="48" width="16" height="4" rx="1" fill="#F5C52B"/></svg><div class="sidebar__logo-text"><span>Oficina de</span><span><strong>ESTUDOS</strong></span></div></div>
+    <nav class="sidebar__nav">
+      <span class="nav-section-label">Principal</span>
+      <button class="nav-link" onclick="location.href='index.html'"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>Dashboard</button>
+      <button class="nav-link" onclick="location.href='campaigns.html'"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg>Campanhas</button>
+      <button class="nav-link" onclick="location.href='leads.html'"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Leads</button>
+      <button class="nav-link active" onclick="location.href='sends.html'"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>Histórico de Envios</button>
+      <span class="nav-section-label">Sistema</span>
+      <button class="nav-link" onclick="location.href='settings.html'"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Configurações</button>
+      <button class="nav-link" id="signout-btn"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>Sair</button>
+    </nav>
+    <div class="sidebar__footer"><strong id="sidebar-user-email">—</strong>Painel Administrativo</div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <div class="admin-topbar__left">
+        <button class="topbar-menu-btn" id="topbar-menu-btn"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        <div><div class="admin-topbar__title">Histórico de Envios</div><div class="admin-topbar__subtitle">Rastreie todos os e-mails disparados</div></div>
+      </div>
+      <div class="admin-topbar__right">
+        <div class="topbar-user"><div class="topbar-user__avatar" id="user-avatar">?</div><span id="topbar-user-name">—</span></div>
+      </div>
+    </div>
+
+    <div class="admin-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-header__title">Histórico de Envios</h1>
+          <p class="page-header__desc" id="sends-count-desc">Carregando…</p>
+        </div>
+        <button class="btn btn--outline" id="export-sends-btn">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          Exportar CSV
+        </button>
+      </div>
+
+      <!-- Filters -->
+      <div class="filters-bar">
+        <div class="filter-group" style="flex:2;min-width:220px;">
+          <label>Buscar por nome ou e-mail</label>
+          <input type="search" id="filter-search" placeholder="Digite para filtrar…" />
+        </div>
+        <div class="filter-group">
+          <label>Campanha</label>
+          <select id="filter-campaign"><option value="">Todas</option></select>
+        </div>
+        <div class="filter-group">
+          <label>Status</label>
+          <select id="filter-status">
+            <option value="">Todos</option>
+            <option value="pending">Pendente</option>
+            <option value="processing">Processando</option>
+            <option value="sent">Enviado</option>
+            <option value="delivered">Entregue</option>
+            <option value="failed">Falhou</option>
+            <option value="rejected">Rejeitado</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Data inicial</label>
+          <input type="date" id="filter-date-from" />
+        </div>
+        <div class="filter-group">
+          <label>Data final</label>
+          <input type="date" id="filter-date-to" />
+        </div>
+        <div class="filter-group" style="justify-content:flex-end;min-width:auto;">
+          <button class="btn btn--ghost btn--sm" id="clear-filters" style="margin-top:1.4rem;">Limpar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Destinatário</th>
+                <th>E-mail</th>
+                <th>Campanha</th>
+                <th>Enviado em</th>
+                <th>Status</th>
+                <th>ID Resend</th>
+                <th>Erro</th>
+              </tr>
+            </thead>
+            <tbody id="sends-tbody">
+              <tr><td colspan="7" style="text-align:center;padding:3rem;color:var(--gray-text);">Carregando…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <div class="pagination__info">
+            Exibindo <span id="page-info-from">—</span>–<span id="page-info-to">—</span>
+            de <span id="page-info-total">—</span> registros
+          </div>
+          <div class="pagination__controls" id="pagination-controls"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/admin-utils.js"></script>
+<script>
+(async function() {
+  const session = await requireAuth();
+  if (!session) return;
+
+  document.getElementById('sidebar-user-email').textContent = session.user.email;
+  document.getElementById('topbar-user-name').textContent   = session.user.email.split('@')[0];
+  document.getElementById('user-avatar').textContent = session.user.email[0]?.toUpperCase();
+  initSidebar();
+
+  const sb = getSB();
+  const PAGE_SIZE = 25;
+  let allSends  = [];
+  let filtered  = [];
+  let currentPage = 1;
+
+  // ---- Load campaigns for filter ----
+  const { data: camps } = await sb.from('campaigns').select('id, name').order('name');
+  (camps || []).forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id; opt.textContent = c.name;
+    document.getElementById('filter-campaign').appendChild(opt);
+  });
+
+  // ---- Load sends ----
+  async function loadSends() {
+    const { data, error } = await sb
+      .from('email_sends')
+      .select('id, status, resend_id, error_message, sent_at, created_at, campaign_id, lead_id, campaigns(name), leads(name, email)')
+      .order('created_at', { ascending: false });
+
+    if (error) { toast('Erro ao carregar envios: ' + error.message, 'error'); return; }
+    allSends = data || [];
+    applyFilters();
+  }
+
+  function applyFilters() {
+    const search   = document.getElementById('filter-search').value.toLowerCase();
+    const campaign = document.getElementById('filter-campaign').value;
+    const status   = document.getElementById('filter-status').value;
+    const dateFrom = document.getElementById('filter-date-from').value;
+    const dateTo   = document.getElementById('filter-date-to').value;
+
+    filtered = allSends.filter(s => {
+      const name  = s.leads?.name?.toLowerCase() || '';
+      const email = s.leads?.email?.toLowerCase() || '';
+      const matchSearch   = !search || name.includes(search) || email.includes(search);
+      const matchCampaign = !campaign || s.campaign_id === campaign;
+      const matchStatus   = !status || s.status === status;
+      const created       = new Date(s.created_at);
+      const matchFrom     = !dateFrom || created >= new Date(dateFrom);
+      const matchTo       = !dateTo   || created <= new Date(dateTo + 'T23:59:59');
+      return matchSearch && matchCampaign && matchStatus && matchFrom && matchTo;
+    });
+
+    document.getElementById('sends-count-desc').textContent = `${filtered.length} registro${filtered.length !== 1 ? 's' : ''}`;
+    currentPage = 1;
+    renderPage();
+  }
+
+  function renderPage() {
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const end   = Math.min(start + PAGE_SIZE, filtered.length);
+    const page  = filtered.slice(start, end);
+    const total = filtered.length;
+
+    document.getElementById('page-info-from').textContent  = total ? start + 1 : 0;
+    document.getElementById('page-info-to').textContent    = end;
+    document.getElementById('page-info-total').textContent = total;
+
+    const tbody = document.getElementById('sends-tbody');
+    if (!page.length) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:3rem;color:var(--gray-text);">Nenhum envio encontrado.</td></tr>';
+    } else {
+      tbody.innerHTML = page.map(s => `<tr>
+        <td><strong style="font-size:.9rem;">${s.leads?.name || '—'}</strong></td>
+        <td style="font-size:.85rem;">${s.leads?.email || '—'}</td>
+        <td style="font-size:.82rem;">${s.campaigns?.name || '—'}</td>
+        <td style="font-size:.82rem;white-space:nowrap;">${fmtDate(s.sent_at || s.created_at)}</td>
+        <td>${statusBadge(s.status)}</td>
+        <td style="font-size:.78rem;color:var(--gray-text);max-width:120px;overflow:hidden;text-overflow:ellipsis;" title="${s.resend_id || ''}">${s.resend_id ? s.resend_id.slice(0,16)+'…' : '—'}</td>
+        <td style="font-size:.78rem;color:var(--danger);max-width:200px;overflow:hidden;text-overflow:ellipsis;" title="${s.error_message || ''}">${s.error_message ? s.error_message.slice(0,40)+(s.error_message.length>40?'…':'') : '—'}</td>
+      </tr>`).join('');
+    }
+
+    buildPagination('pagination-controls', currentPage, Math.ceil(total / PAGE_SIZE) || 1, (p) => { currentPage = p; renderPage(); });
+  }
+
+  document.getElementById('export-sends-btn').addEventListener('click', () => {
+    exportCSV(filtered.map(s => ({
+      Destinatário: s.leads?.name || '',
+      Email: s.leads?.email || '',
+      Campanha: s.campaigns?.name || '',
+      Enviado: fmtDate(s.sent_at || s.created_at),
+      Status: s.status,
+      ResendID: s.resend_id || '',
+      Erro: s.error_message || '',
+    })), `envios_${new Date().toISOString().slice(0,10)}.csv`);
+  });
+
+  const dSearch = debounce(applyFilters, 300);
+  document.getElementById('filter-search').addEventListener('input', dSearch);
+  document.getElementById('filter-campaign').addEventListener('change', applyFilters);
+  document.getElementById('filter-status').addEventListener('change', applyFilters);
+  document.getElementById('filter-date-from').addEventListener('change', applyFilters);
+  document.getElementById('filter-date-to').addEventListener('change', applyFilters);
+  document.getElementById('clear-filters').addEventListener('click', () => {
+    ['filter-search','filter-campaign','filter-status','filter-date-from','filter-date-to'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    applyFilters();
+  });
+
+  await loadSends();
+})();
+</script>
+</body>
+</html>

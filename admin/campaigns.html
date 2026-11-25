@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campanhas — Painel Oficina de Estudos</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/admin.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>window.__ENV = { SUPABASE_URL: 'https://qliosdkejhnxybrluriw.supabase.co', SUPABASE_ANON_KEY: 'sb_publishable__JOFD8fFD995D2517MRJAQ_WTJlFi30' };</script>
+</head>
+<body>
+<div class="admin-layout">
+  <!-- SIDEBAR (same structure, included inline for standalone pages) -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__logo">
+      <svg viewBox="0 0 60 60" fill="none"><path d="M30 8L6 26v4h4v22h40V30h4v-4L30 8z" fill="#F5C52B"/><circle cx="30" cy="38" r="8" fill="rgba(255,255,255,.15)"/><circle cx="30" cy="38" r="4" fill="#F5C52B"/><rect x="28.5" y="28" width="3" height="4" rx="1" fill="white"/><rect x="28.5" y="44" width="3" height="4" rx="1" fill="white"/><rect x="20" y="36.5" width="4" height="3" rx="1" fill="white"/><rect x="36" y="36.5" width="4" height="3" rx="1" fill="white"/><rect x="22" y="48" width="16" height="4" rx="1" fill="#F5C52B"/></svg>
+      <div class="sidebar__logo-text"><span>Oficina de</span><span><strong>ESTUDOS</strong></span></div>
+    </div>
+    <nav class="sidebar__nav">
+      <span class="nav-section-label">Principal</span>
+      <button class="nav-link" data-page="index.html" onclick="location.href='index.html'"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>Dashboard</button>
+      <button class="nav-link active" data-page="campaigns.html" onclick="location.href='campaigns.html'"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg>Campanhas</button>
+      <button class="nav-link" data-page="leads.html" onclick="location.href='leads.html'"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Leads</button>
+      <button class="nav-link" data-page="sends.html" onclick="location.href='sends.html'"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>Histórico de Envios</button>
+      <span class="nav-section-label">Sistema</span>
+      <button class="nav-link" data-page="settings.html" onclick="location.href='settings.html'"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Configurações</button>
+      <button class="nav-link" id="signout-btn"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>Sair</button>
+    </nav>
+    <div class="sidebar__footer"><strong id="sidebar-user-email">—</strong>Painel Administrativo</div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <div class="admin-topbar__left">
+        <button class="topbar-menu-btn" id="topbar-menu-btn"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        <div><div class="admin-topbar__title">Campanhas</div><div class="admin-topbar__subtitle">Gerencie os materiais e campanhas ativas</div></div>
+      </div>
+      <div class="admin-topbar__right">
+        <div class="topbar-user">
+          <div class="topbar-user__avatar" id="user-avatar">?</div>
+          <span id="topbar-user-name">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-header__title">Campanhas</h1>
+          <p class="page-header__desc">Crie e gerencie campanhas de distribuição de materiais gratuitos.</p>
+        </div>
+        <div class="page-header__actions">
+          <button class="btn btn--blue" id="new-campaign-btn">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Nova Campanha
+          </button>
+        </div>
+      </div>
+
+      <!-- Active campaign banner -->
+      <div id="active-campaign-banner" style="display:none;" class="alert alert--success" style="margin-bottom:1.5rem;">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>Campanha ativa na landing page: <strong id="active-campaign-name">—</strong></span>
+      </div>
+
+      <!-- Campaigns grid -->
+      <div id="campaigns-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.25rem;">
+        <div style="text-align:center;padding:3rem;color:var(--gray-text);">Carregando campanhas…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CAMPAIGN MODAL ===== -->
+<div class="modal-overlay" id="campaign-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal modal--lg">
+    <div class="modal__header">
+      <h2 class="modal__title" id="modal-title">Nova Campanha</h2>
+      <button class="modal__close" id="modal-close" aria-label="Fechar">
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <div id="modal-alert" class="alert alert--error" style="display:none;margin-bottom:1rem;" role="alert">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span id="modal-alert-msg"></span>
+      </div>
+      <form id="campaign-form" class="admin-form" novalidate>
+        <input type="hidden" id="campaign-id" />
+        <div class="form-row">
+          <div class="form-group">
+            <label for="c-name">Nome interno da campanha <span class="required">*</span></label>
+            <input type="text" id="c-name" class="form-control" placeholder="Ex.: Material de Planejamento — Nov/26" maxlength="120" />
+          </div>
+          <div class="form-group">
+            <label for="c-title">Título público (landing page) <span class="required">*</span></label>
+            <input type="text" id="c-title" class="form-control" placeholder="Ex.: Aprenda a organizar seus estudos" maxlength="200" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="c-desc">Descrição da campanha <span class="required">*</span></label>
+          <textarea id="c-desc" class="form-control" rows="3" placeholder="Descreva brevemente o material e o que o visitante vai receber…"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="c-email-subject">Assunto do e-mail <span class="required">*</span></label>
+            <input type="text" id="c-email-subject" class="form-control" placeholder="Ex.: Seu material gratuito chegou! 📚" maxlength="200" />
+          </div>
+          <div class="form-group">
+            <label>Status da campanha</label>
+            <div class="toggle-wrap" style="margin-top:.6rem;">
+              <label class="toggle">
+                <input type="checkbox" id="c-active" />
+                <span class="toggle__slider"></span>
+              </label>
+              <span id="c-active-label" style="font-size:.88rem;color:var(--gray-text);">Inativa</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="c-email-content">Mensagem personalizada do e-mail <span class="required">*</span></label>
+          <textarea id="c-email-content" class="form-control" rows="4" placeholder="Olá {nome}, obrigada por se cadastrar! Segue o link para acessar o material…"></textarea>
+          <p class="form-hint">Use <code>{nome}</code> para personalizar com o nome do destinatário.</p>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Imagem de apresentação</label>
+            <div class="file-upload-area" id="image-upload-area">
+              <input type="file" id="c-image" accept="image/jpeg,image/png,image/webp,image/gif" />
+              <div class="file-upload-area__icon">
+                <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
+              <p class="file-upload-area__label"><strong>Clique</strong> ou arraste uma imagem</p>
+              <p class="file-upload-area__hint">JPG, PNG, WEBP — até 5 MB</p>
+            </div>
+            <div class="file-upload-preview" id="image-preview" style="display:none;">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01"/></svg>
+              <span id="image-filename">—</span>
+              <button type="button" id="clear-image" class="btn btn--ghost btn--sm" style="margin-left:auto;">✕</button>
+            </div>
+            <input type="hidden" id="c-image-url" />
+          </div>
+          <div class="form-group">
+            <label>Arquivo do material (PDF) <span class="required">*</span></label>
+            <div class="file-upload-area" id="material-upload-area">
+              <input type="file" id="c-material" accept=".pdf,.doc,.docx,.ppt,.pptx,.zip" />
+              <div class="file-upload-area__icon">
+                <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              </div>
+              <p class="file-upload-area__label"><strong>Clique</strong> ou arraste o arquivo</p>
+              <p class="file-upload-area__hint">PDF, DOC, PPT, ZIP — até 50 MB</p>
+            </div>
+            <div class="file-upload-preview" id="material-preview" style="display:none;">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span id="material-filename">—</span>
+              <button type="button" id="clear-material" class="btn btn--ghost btn--sm" style="margin-left:auto;">✕</button>
+            </div>
+            <input type="hidden" id="c-material-url" />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="modal-cancel">Cancelar</button>
+      <button class="btn btn--blue" id="modal-save">
+        <span id="modal-save-text">Salvar Campanha</span>
+        <span class="spinner" id="modal-spinner" style="display:none;"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/admin-utils.js"></script>
+<script>
+(async function() {
+  const session = await requireAuth();
+  if (!session) return;
+
+  document.getElementById('sidebar-user-email').textContent = session.user.email;
+  document.getElementById('topbar-user-name').textContent   = session.user.email.split('@')[0];
+  document.getElementById('user-avatar').textContent = session.user.email[0]?.toUpperCase();
+  initSidebar();
+
+  const sb = getSB();
+  let campaigns = [];
+  let editingId = null;
+
+  // ---- Toggle active label ----
+  const activeToggle = document.getElementById('c-active');
+  const activeLabel  = document.getElementById('c-active-label');
+  activeToggle.addEventListener('change', () => {
+    activeLabel.textContent = activeToggle.checked ? 'Ativa (será exibida na landing page)' : 'Inativa';
+  });
+
+  // ---- File upload helpers ----
+  function setupFileUpload(inputId, areaId, previewId, filenameId, clearId) {
+    const input   = document.getElementById(inputId);
+    const area    = document.getElementById(areaId);
+    const preview = document.getElementById(previewId);
+    const fname   = document.getElementById(filenameId);
+    const clear   = document.getElementById(clearId);
+
+    area.addEventListener('dragover', e => { e.preventDefault(); area.classList.add('drag-over'); });
+    area.addEventListener('dragleave', () => area.classList.remove('drag-over'));
+    area.addEventListener('drop', e => {
+      e.preventDefault(); area.classList.remove('drag-over');
+      if (e.dataTransfer.files[0]) { input.files = e.dataTransfer.files; updatePreview(); }
+    });
+    input.addEventListener('change', updatePreview);
+    clear.addEventListener('click', () => { input.value = ''; preview.style.display = 'none'; area.style.display = ''; });
+
+    function updatePreview() {
+      const f = input.files[0];
+      if (f) {
+        fname.textContent = f.name;
+        preview.style.display = '';
+        area.style.display = 'none';
+      }
+    }
+  }
+  setupFileUpload('c-image', 'image-upload-area', 'image-preview', 'image-filename', 'clear-image');
+  setupFileUpload('c-material', 'material-upload-area', 'material-preview', 'material-filename', 'clear-material');
+
+  // ---- Load campaigns ----
+  async function loadCampaigns() {
+    const { data, error } = await sb.from('campaigns').select('*').order('created_at', { ascending: false });
+    if (error) { toast('Erro ao carregar campanhas: ' + error.message, 'error'); return; }
+    campaigns = data || [];
+    renderCampaigns();
+
+    const active = campaigns.find(c => c.is_active);
+    const banner = document.getElementById('active-campaign-banner');
+    if (active) {
+      banner.style.display = '';
+      document.getElementById('active-campaign-name').textContent = active.name;
+    } else {
+      banner.style.display = 'none';
+    }
+  }
+
+  function renderCampaigns() {
+    const grid = document.getElementById('campaigns-grid');
+    if (!campaigns.length) {
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
+        <div class="empty-state__icon"><svg width="56" height="56" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg></div>
+        <h3 class="empty-state__title">Nenhuma campanha criada</h3>
+        <p class="empty-state__desc">Clique em "Nova Campanha" para começar.</p>
+      </div>`;
+      return;
+    }
+    grid.innerHTML = campaigns.map(c => `
+      <div class="campaign-card">
+        <div class="campaign-card__status-bar campaign-card__status-bar--${c.is_active ? 'active' : 'inactive'}"></div>
+        <div class="campaign-card__body">
+          <div class="campaign-card__meta">
+            ${statusBadge(c.is_active ? 'active' : 'inactive')}
+            <span style="font-size:.75rem;color:var(--gray-text);">${fmtDateOnly(c.created_at)}</span>
+          </div>
+          <h3 class="campaign-card__name">${c.name}</h3>
+          <p class="campaign-card__title">${c.title}</p>
+          <p style="font-size:.82rem;color:var(--gray-text);line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${c.description || ''}</p>
+          ${c.material_url ? `<div style="margin-top:.75rem;font-size:.8rem;color:var(--success);display:flex;align-items:center;gap:.3rem;"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Material carregado</div>` : `<div style="margin-top:.75rem;font-size:.8rem;color:var(--warning);display:flex;align-items:center;gap:.3rem;"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Sem material</div>`}
+        </div>
+        <div class="campaign-card__footer">
+          ${!c.is_active ? `<button class="btn btn--sm btn--outline" onclick="activateCampaign('${c.id}')">Ativar</button>` : `<button class="btn btn--sm btn--ghost" onclick="deactivateCampaign('${c.id}')">Desativar</button>`}
+          <button class="btn btn--sm btn--ghost" onclick="editCampaign('${c.id}')">Editar</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ---- Modal ----
+  const modal    = document.getElementById('campaign-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalAlert = document.getElementById('modal-alert');
+  const modalAlertMsg = document.getElementById('modal-alert-msg');
+
+  function openModal(title = 'Nova Campanha') {
+    modalTitle.textContent = title;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    hideModalAlert();
+  }
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('campaign-form').reset();
+    document.getElementById('campaign-id').value = '';
+    document.getElementById('c-image-url').value = '';
+    document.getElementById('c-material-url').value = '';
+    document.getElementById('image-preview').style.display = 'none';
+    document.getElementById('image-upload-area').style.display = '';
+    document.getElementById('material-preview').style.display = 'none';
+    document.getElementById('material-upload-area').style.display = '';
+    activeLabel.textContent = 'Inativa';
+    editingId = null;
+  }
+  function showModalAlert(msg) {
+    modalAlertMsg.textContent = msg;
+    modalAlert.style.display = '';
+  }
+  function hideModalAlert() { modalAlert.style.display = 'none'; }
+
+  document.getElementById('new-campaign-btn').addEventListener('click', () => { editingId = null; openModal('Nova Campanha'); });
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  document.getElementById('modal-cancel').addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+  // ---- Edit campaign ----
+  window.editCampaign = function(id) {
+    const c = campaigns.find(x => x.id === id);
+    if (!c) return;
+    editingId = id;
+    document.getElementById('campaign-id').value     = id;
+    document.getElementById('c-name').value          = c.name || '';
+    document.getElementById('c-title').value         = c.title || '';
+    document.getElementById('c-desc').value          = c.description || '';
+    document.getElementById('c-email-subject').value = c.email_subject || '';
+    document.getElementById('c-email-content').value = c.email_content || '';
+    document.getElementById('c-active').checked      = c.is_active;
+    document.getElementById('c-image-url').value     = c.image_url || '';
+    document.getElementById('c-material-url').value  = c.material_url || '';
+    activeLabel.textContent = c.is_active ? 'Ativa (exibida na landing page)' : 'Inativa';
+
+    if (c.material_url) {
+      document.getElementById('material-filename').textContent = c.material_url.split('/').pop();
+      document.getElementById('material-preview').style.display = '';
+      document.getElementById('material-upload-area').style.display = 'none';
+    }
+    if (c.image_url) {
+      document.getElementById('image-filename').textContent = c.image_url.split('/').pop();
+      document.getElementById('image-preview').style.display = '';
+      document.getElementById('image-upload-area').style.display = 'none';
+    }
+    openModal('Editar Campanha');
+  };
+
+  // ---- Activate / Deactivate ----
+  window.activateCampaign = async function(id) {
+    // Deactivate all, then activate selected
+    const { error: e1 } = await sb.from('campaigns').update({ is_active: false, updated_at: new Date().toISOString() }).neq('id', id);
+    const { error: e2 } = await sb.from('campaigns').update({ is_active: true,  updated_at: new Date().toISOString() }).eq('id', id);
+    if (e1 || e2) { toast('Erro ao ativar campanha', 'error'); return; }
+    toast('Campanha ativada com sucesso!', 'success');
+    await loadCampaigns();
+  };
+
+  window.deactivateCampaign = async function(id) {
+    const { error } = await sb.from('campaigns').update({ is_active: false, updated_at: new Date().toISOString() }).eq('id', id);
+    if (error) { toast('Erro ao desativar campanha', 'error'); return; }
+    toast('Campanha desativada.', 'info');
+    await loadCampaigns();
+  };
+
+  // ---- Upload file to Supabase Storage ----
+  async function uploadFile(file, bucket, path) {
+    const { data, error } = await sb.storage.from(bucket).upload(path, file, { upsert: true });
+    if (error) throw error;
+    const { data: { publicUrl } } = sb.storage.from(bucket).getPublicUrl(path);
+    return publicUrl;
+  }
+
+  // ---- Save campaign ----
+  document.getElementById('modal-save').addEventListener('click', async () => {
+    hideModalAlert();
+    const name         = document.getElementById('c-name').value.trim();
+    const title        = document.getElementById('c-title').value.trim();
+    const desc         = document.getElementById('c-desc').value.trim();
+    const emailSubject = document.getElementById('c-email-subject').value.trim();
+    const emailContent = document.getElementById('c-email-content').value.trim();
+    const isActive     = document.getElementById('c-active').checked;
+    let imageUrl       = document.getElementById('c-image-url').value;
+    let materialUrl    = document.getElementById('c-material-url').value;
+
+    if (!name || !title || !desc || !emailSubject || !emailContent) {
+      showModalAlert('Preencha todos os campos obrigatórios.'); return;
+    }
+    if (!editingId && !document.getElementById('c-material').files[0] && !materialUrl) {
+      showModalAlert('Faça upload do arquivo do material.'); return;
+    }
+
+    const saveBtn = document.getElementById('modal-save');
+    const saveTxt = document.getElementById('modal-save-text');
+    const saveSpinner = document.getElementById('modal-spinner');
+    saveBtn.disabled = true; saveTxt.textContent = 'Salvando…'; saveSpinner.style.display = '';
+
+    try {
+      // Upload image if selected
+      const imgFile = document.getElementById('c-image').files[0];
+      if (imgFile) {
+        const imgPath = `campaigns/${Date.now()}_${imgFile.name.replace(/[^a-zA-Z0-9._-]/g,'')}`;
+        imageUrl = await uploadFile(imgFile, 'campaign-images', imgPath);
+      }
+
+      // Upload material if selected
+      const matFile = document.getElementById('c-material').files[0];
+      if (matFile) {
+        const matPath = `campaigns/${Date.now()}_${matFile.name.replace(/[^a-zA-Z0-9._-]/g,'')}`;
+        materialUrl = await uploadFile(matFile, 'campaign-materials', matPath);
+      }
+
+      const payload = {
+        name, title, description: desc,
+        email_subject: emailSubject,
+        email_content: emailContent,
+        is_active: isActive,
+        image_url: imageUrl || null,
+        material_url: materialUrl || null,
+        updated_at: new Date().toISOString(),
+      };
+
+      if (isActive) {
+        // Deactivate all others first
+        await sb.from('campaigns').update({ is_active: false, updated_at: new Date().toISOString() }).neq('id', editingId || '__none__');
+      }
+
+      let error;
+      if (editingId) {
+        ({ error } = await sb.from('campaigns').update(payload).eq('id', editingId));
+      } else {
+        payload.created_at = new Date().toISOString();
+        ({ error } = await sb.from('campaigns').insert(payload));
+      }
+
+      if (error) { showModalAlert('Erro ao salvar: ' + error.message); return; }
+
+      toast(editingId ? 'Campanha atualizada!' : 'Campanha criada!', 'success');
+      closeModal();
+      await loadCampaigns();
+    } catch (err) {
+      showModalAlert('Erro ao fazer upload: ' + err.message);
+    } finally {
+      saveBtn.disabled = false; saveTxt.textContent = 'Salvar Campanha'; saveSpinner.style.display = 'none';
+    }
+  });
+
+  await loadCampaigns();
+})();
+</script>
+</body>
+</html>

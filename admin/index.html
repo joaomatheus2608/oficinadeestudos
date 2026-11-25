@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Painel Oficina de Estudos</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/admin.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+    window.__ENV = {
+      SUPABASE_URL: 'https://qliosdkejhnxybrluriw.supabase.co',
+      SUPABASE_ANON_KEY: 'sb_publishable__JOFD8fFD995D2517MRJAQ_WTJlFi30',
+    };
+  </script>
+</head>
+<body>
+<div class="admin-layout">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar" role="navigation" aria-label="Menu administrativo">
+    <div class="sidebar__logo">
+      <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 8L6 26v4h4v22h40V30h4v-4L30 8z" fill="#F5C52B"/>
+        <circle cx="30" cy="38" r="8" fill="rgba(255,255,255,.15)"/>
+        <circle cx="30" cy="38" r="8" fill="none" stroke="white" stroke-width="2"/>
+        <circle cx="30" cy="38" r="4" fill="#F5C52B"/>
+        <rect x="28.5" y="28" width="3" height="4" rx="1" fill="white"/>
+        <rect x="28.5" y="44" width="3" height="4" rx="1" fill="white"/>
+        <rect x="20" y="36.5" width="4" height="3" rx="1" fill="white"/>
+        <rect x="36" y="36.5" width="4" height="3" rx="1" fill="white"/>
+        <rect x="22" y="48" width="16" height="4" rx="1" fill="#F5C52B"/>
+      </svg>
+      <div class="sidebar__logo-text">
+        <span>Oficina de</span>
+        <span><strong>ESTUDOS</strong></span>
+      </div>
+    </div>
+
+    <nav class="sidebar__nav">
+      <span class="nav-section-label">Principal</span>
+      <button class="nav-link active" data-page="index.html" onclick="location.href='index.html'">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-link" data-page="campaigns.html" onclick="location.href='campaigns.html'">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg>
+        Campanhas
+      </button>
+      <button class="nav-link" data-page="leads.html" onclick="location.href='leads.html'">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        Leads
+        <span class="nav-badge" id="nav-leads-count">…</span>
+      </button>
+      <button class="nav-link" data-page="sends.html" onclick="location.href='sends.html'">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        Histórico de Envios
+      </button>
+
+      <span class="nav-section-label" style="margin-top:.5rem;">Sistema</span>
+      <button class="nav-link" data-page="settings.html" onclick="location.href='settings.html'">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Configurações
+      </button>
+      <button class="nav-link" id="signout-btn">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        Sair
+      </button>
+    </nav>
+
+    <div class="sidebar__footer">
+      <strong id="sidebar-user-email">carregando…</strong>
+      Painel Administrativo
+    </div>
+  </aside>
+
+  <!-- Overlay -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- ===== MAIN ===== -->
+  <div class="admin-main">
+    <!-- Topbar -->
+    <div class="admin-topbar">
+      <div class="admin-topbar__left">
+        <button class="topbar-menu-btn" id="topbar-menu-btn" aria-label="Abrir menu">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div>
+          <div class="admin-topbar__title">Dashboard</div>
+          <div class="admin-topbar__subtitle" id="topbar-date">Carregando…</div>
+        </div>
+      </div>
+      <div class="admin-topbar__right">
+        <div class="topbar-user">
+          <div class="topbar-user__avatar" id="user-avatar">?</div>
+          <span id="topbar-user-name">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="admin-content">
+
+      <!-- Stat Cards -->
+      <div class="stats-grid">
+        <div class="stat-card stat-card--blue">
+          <div class="stat-card__icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+          <div class="stat-card__label">Total de Leads</div>
+          <div class="stat-card__value" id="stat-total-leads">—</div>
+          <div class="stat-card__sub">cadastros realizados</div>
+        </div>
+        <div class="stat-card stat-card--yellow">
+          <div class="stat-card__icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div class="stat-card__label">Leads Hoje</div>
+          <div class="stat-card__value" id="stat-today-leads">—</div>
+          <div class="stat-card__sub">nas últimas 24h</div>
+        </div>
+        <div class="stat-card stat-card--green">
+          <div class="stat-card__icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+          <div class="stat-card__label">Materiais Enviados</div>
+          <div class="stat-card__value" id="stat-sent">—</div>
+          <div class="stat-card__sub">e-mails entregues/enviados</div>
+        </div>
+        <div class="stat-card stat-card--blue">
+          <div class="stat-card__icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div class="stat-card__label">Envios Pendentes</div>
+          <div class="stat-card__value" id="stat-pending">—</div>
+          <div class="stat-card__sub">aguardando processamento</div>
+        </div>
+        <div class="stat-card stat-card--red">
+          <div class="stat-card__icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></div>
+          <div class="stat-card__label">Envios com Erro</div>
+          <div class="stat-card__value" id="stat-failed">—</div>
+          <div class="stat-card__sub">falhou ou rejeitado</div>
+        </div>
+        <div class="stat-card stat-card--green">
+          <div class="stat-card__icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg></div>
+          <div class="stat-card__label">Campanhas Ativas</div>
+          <div class="stat-card__value" id="stat-active-campaigns">—</div>
+          <div class="stat-card__sub">campanhas em andamento</div>
+        </div>
+      </div>
+
+      <!-- Charts row -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;" class="charts-row">
+        <div class="chart-wrap">
+          <div class="chart-header">
+            <span class="chart-title">Leads por dia (últimos 7 dias)</span>
+            <span style="font-size:.78rem;color:var(--gray-text);">Total</span>
+          </div>
+          <div class="chart-body">
+            <canvas id="chart-leads" width="400" height="200" style="width:100%;"></canvas>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <div class="chart-header">
+            <span class="chart-title">Status dos envios</span>
+            <span style="font-size:.78rem;color:var(--gray-text);">Total</span>
+          </div>
+          <div class="chart-body" id="sends-status-chart">
+            <!-- Simple donut placeholder rendered via JS -->
+            <canvas id="chart-sends" width="400" height="200" style="width:100%;"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Leads -->
+      <div class="card">
+        <div class="card__header">
+          <span class="card__title">Leads recentes</span>
+          <a href="leads.html" class="btn btn--outline btn--sm">Ver todos</a>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="recent-leads-table">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Telefone</th>
+                <th>Campanha</th>
+                <th>Cadastrado em</th>
+                <th>Status envio</th>
+              </tr>
+            </thead>
+            <tbody id="recent-leads-body">
+              <tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--gray-text);">Carregando…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /admin-content -->
+  </div><!-- /admin-main -->
+</div><!-- /admin-layout -->
+
+<script src="assets/js/admin-utils.js"></script>
+<script>
+(async function() {
+  const session = await requireAuth();
+  if (!session) return;
+
+  // Set user info
+  const email = session.user.email || '';
+  document.getElementById('sidebar-user-email').textContent = email;
+  document.getElementById('topbar-user-name').textContent   = email.split('@')[0];
+  document.getElementById('user-avatar').textContent = email[0]?.toUpperCase() || 'A';
+
+  // Date
+  document.getElementById('topbar-date').textContent = new Date().toLocaleDateString('pt-BR', {
+    weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
+  });
+
+  initSidebar();
+
+  const sb = getSB();
+
+  // ---- Load stats ----
+  async function loadStats() {
+    // Total leads
+    const { count: totalLeads } = await sb.from('leads').select('*', { count: 'exact', head: true });
+    document.getElementById('stat-total-leads').textContent = totalLeads ?? 0;
+    document.getElementById('nav-leads-count').textContent  = totalLeads ?? 0;
+
+    // Today leads
+    const today = new Date(); today.setHours(0,0,0,0);
+    const { count: todayLeads } = await sb.from('leads')
+      .select('*', { count: 'exact', head: true })
+      .gte('created_at', today.toISOString());
+    document.getElementById('stat-today-leads').textContent = todayLeads ?? 0;
+
+    // Email sends stats
+    const { data: sends } = await sb.from('email_sends').select('status');
+    const sent    = sends?.filter(s => s.status === 'sent' || s.status === 'delivered').length ?? 0;
+    const pending = sends?.filter(s => s.status === 'pending' || s.status === 'processing').length ?? 0;
+    const failed  = sends?.filter(s => s.status === 'failed' || s.status === 'rejected').length ?? 0;
+    document.getElementById('stat-sent').textContent    = sent;
+    document.getElementById('stat-pending').textContent = pending;
+    document.getElementById('stat-failed').textContent  = failed;
+
+    // Active campaigns
+    const { count: activeCamp } = await sb.from('campaigns')
+      .select('*', { count: 'exact', head: true })
+      .eq('is_active', true);
+    document.getElementById('stat-active-campaigns').textContent = activeCamp ?? 0;
+
+    // Draw sends chart
+    drawBarChart('chart-sends',
+      ['Enviado', 'Pendente', 'Falhou'],
+      [sent, pending, failed],
+      '#FF5500'
+    );
+  }
+
+  // ---- Leads per day chart ----
+  async function loadLeadsChart() {
+    const days = 7;
+    const labels = [], values = [];
+    for (let i = days - 1; i >= 0; i--) {
+      const d = new Date(); d.setDate(d.getDate() - i); d.setHours(0,0,0,0);
+      const next = new Date(d); next.setDate(next.getDate() + 1);
+      const { count } = await sb.from('leads').select('*', { count: 'exact', head: true })
+        .gte('created_at', d.toISOString())
+        .lt('created_at', next.toISOString());
+      labels.push(d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }));
+      values.push(count ?? 0);
+    }
+    drawBarChart('chart-leads', labels, values, '#FF5500');
+  }
+
+  // ---- Recent leads ----
+  async function loadRecentLeads() {
+    const { data } = await sb.from('leads')
+      .select('id, name, email, phone, created_at, campaign_id, campaigns(name), email_sends(status)')
+      .order('created_at', { ascending: false })
+      .limit(8);
+
+    const tbody = document.getElementById('recent-leads-body');
+    if (!data?.length) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--gray-text);">Nenhum lead cadastrado ainda.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = data.map(lead => {
+      const latestSend = lead.email_sends?.[lead.email_sends.length - 1];
+      const status = latestSend?.status || 'pending';
+      const phone = lead.phone || '—';
+      const wa = lead.phone ? `<a href="${whatsAppLink(phone)}" target="_blank" rel="noopener" class="btn btn--sm btn--ghost" title="Chamar no WhatsApp" style="padding:.25rem .5rem;font-size:.75rem;gap:.25rem;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="color:#25d366;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>` : '—';
+
+      return `<tr>
+        <td><strong>${lead.name}</strong></td>
+        <td style="font-size:.85rem;">${lead.email}</td>
+        <td style="font-size:.85rem;">${phone} ${wa}</td>
+        <td style="font-size:.82rem;">${lead.campaigns?.name || '—'}</td>
+        <td style="font-size:.82rem;">${fmtDate(lead.created_at)}</td>
+        <td>${statusBadge(status)}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  await Promise.all([loadStats(), loadLeadsChart(), loadRecentLeads()]);
+})();
+</script>
+</body>
+</html>

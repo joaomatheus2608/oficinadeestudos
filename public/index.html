@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title">Material Gratuito — Oficina de Estudos</title>
+  <meta name="description" id="page-desc" content="Receba gratuitamente o material exclusivo da Oficina de Estudos." />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="Oficina de Estudos" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" id="og-title" content="Material Gratuito — Oficina de Estudos" />
+  <meta property="og:description" id="og-desc" content="Receba gratuitamente nosso material exclusivo." />
+
+  <!-- Google Fonts: Montserrat (Display 900) + Poppins (Body/UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="assets/css/main.css" />
+
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+  <!-- Env injection placeholder (replace at deploy) -->
+  <script>
+    window.__ENV = {
+      SUPABASE_URL: 'https://qliosdkejhnxybrluriw.supabase.co',
+      SUPABASE_ANON_KEY: 'sb_publishable__JOFD8fFD995D2517MRJAQ_WTJlFi30',
+    };
+  </script>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="header" role="banner">
+  <div class="header__inner">
+    <a href="index.html" class="header__logo" aria-label="Oficina de Estudos — Início">
+      <img src="assets/images/logo-white.png" alt="Oficina de Estudos" class="header__logo-img" />
+    </a>
+
+    <nav class="header__nav" id="main-nav" role="navigation" aria-label="Navegação principal">
+      <a href="#solicitar" class="btn btn--primary">QUERO MEU MATERIAL</a>
+    </nav>
+
+    <button class="header__hamburger" id="hamburger-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="main-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ============================================================
+     CAMPAIGN NOT FOUND STATE
+     ============================================================ -->
+<section id="no-campaign" style="display:none; background:var(--blue-deep); padding:5rem 0; text-align:center; color:#fff;">
+  <div class="container">
+    <svg width="64" height="64" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="margin:0 auto 1rem;opacity:.5;">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg>
+    <h2 style="font-family:var(--font-display);font-size:1.8rem;margin-bottom:.75rem;">Nenhuma campanha ativa no momento</h2>
+    <p style="opacity:.8;max-width:420px;margin:0 auto;">Em breve traremos novidades. Fique de olho nas nossas redes!</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero" id="inicio" aria-labelledby="hero-title">
+  <!-- Halftone dot accent matching brand visual -->
+  <div class="hero__dots" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="hero__inner">
+      <div class="hero__content animate-fadein">
+        <div class="hero__label" id="hero-label">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          <span>Material 100% Gratuito</span>
+        </div>
+
+        <h1 class="hero__title" id="hero-title">
+          <span class="hero__title-3d" id="hero-title-highlight">SAIA NA FRENTE NOS ESTUDOS</span>
+        </h1>
+
+        <p class="hero__desc" id="hero-desc">
+          Preencha o formulário abaixo e receba gratuitamente o nosso material exclusivo direto no seu e-mail.
+        </p>
+
+        <div class="hero__cta-group">
+          <a href="#solicitar" class="btn btn--primary btn--lg" id="hero-cta-btn">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            QUERO RECEBER GRÁTIS
+          </a>
+        </div>
+
+        <div class="hero__free-tag">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          Envio imediato no seu e-mail · 100% gratuito
+        </div>
+      </div>
+
+      <div class="hero__image-wrap animate-fadein animate-fadein-delay-2">
+        <div class="hero__circle-accent" aria-hidden="true"></div>
+        <img id="hero-image" src="assets/images/aprovados-site.avif" alt="Aprovados Oficina de Estudos" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FORM SECTION (100vh Step-by-Step + Timeline)
+     ============================================================ -->
+<section class="form-section" id="solicitar" aria-labelledby="form-heading">
+  <div class="form-section__dots" aria-hidden="true"></div>
+  <div class="container form-section__container">
+    <div class="section-header">
+      <span class="badge">Acesso Gratuito</span>
+      <h2 class="section-header__title" id="form-heading">GARANTA SEU MATERIAL <span>AGORA</span></h2>
+      <p class="section-header__desc">Responda em menos de 30 segundos e receba direto no seu e-mail.</p>
+    </div>
+
+    <div class="form-wrap">
+      <div class="form-wrap__header">
+        <div class="form-wrap__header-top">
+          <h3 id="form-material-name">Material Gratuito</h3>
+          <span class="step-counter" id="step-counter">Passo 1 de 3</span>
+        </div>
+        <!-- Timeline -->
+        <div class="timeline" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1" id="form-timeline">
+          <div class="timeline__track">
+            <div class="timeline__fill" id="timeline-fill" style="width:0%;"></div>
+          </div>
+          <div class="timeline__steps">
+            <div class="timeline__step active" data-step="1">
+              <span class="timeline__dot">1</span>
+              <span class="timeline__label">Nome</span>
+            </div>
+            <div class="timeline__step" data-step="2">
+              <span class="timeline__dot">2</span>
+              <span class="timeline__label">E-mail</span>
+            </div>
+            <div class="timeline__step" data-step="3">
+              <span class="timeline__dot">3</span>
+              <span class="timeline__label">WhatsApp</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-wrap__body" id="form-body">
+        <form id="lead-form" novalidate autocomplete="on">
+
+          <!-- STEP 1: NOME -->
+          <div class="form-step active" data-step="1">
+            <div class="form-group">
+              <label for="lead-name">1. Como podemos te chamar? <span class="required" aria-hidden="true">*</span></label>
+              <input
+                type="text"
+                id="lead-name"
+                name="name"
+                class="form-control"
+                placeholder="Digite seu nome completo"
+                autocomplete="name"
+                maxlength="120"
+                aria-required="true"
+              />
+              <span class="form-error-msg" id="err-name" role="alert">Por favor, informe seu nome completo (mínimo 3 caracteres).</span>
+            </div>
+            <div class="step-actions">
+              <button type="button" class="btn btn--primary btn--lg btn--full" id="next-step-1">
+                CONTINUAR
+                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2: E-MAIL -->
+          <div class="form-step" data-step="2">
+            <div class="form-group">
+              <label for="lead-email">2. Para qual e-mail enviamos o material? <span class="required" aria-hidden="true">*</span></label>
+              <input
+                type="email"
+                id="lead-email"
+                name="email"
+                class="form-control"
+                placeholder="seu@email.com"
+                autocomplete="email"
+                maxlength="200"
+                aria-required="true"
+              />
+              <span class="form-error-msg" id="err-email" role="alert">Por favor, informe um e-mail válido.</span>
+            </div>
+            <div class="step-actions step-actions--split">
+              <button type="button" class="btn btn--ghost-dark" id="prev-step-2">← Voltar</button>
+              <button type="button" class="btn btn--primary btn--lg" id="next-step-2" style="flex:1;justify-content:center;">
+                CONTINUAR
+                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3: WHATSAPP + PRIVACIDADE -->
+          <div class="form-step" data-step="3">
+            <div class="form-group">
+              <label for="lead-phone">3. Qual o seu WhatsApp? <span class="required" aria-hidden="true">*</span></label>
+              <input
+                type="tel"
+                id="lead-phone"
+                name="phone"
+                class="form-control"
+                placeholder="(11) 99999-9999"
+                autocomplete="tel"
+                maxlength="20"
+                aria-required="true"
+              />
+              <span class="form-error-msg" id="err-phone" role="alert">Por favor, informe um telefone válido com DDD.</span>
+            </div>
+
+            <div class="form-group">
+              <div class="checkbox-group">
+                <input type="checkbox" id="lead-privacy" name="privacy" aria-required="true" />
+                <label for="lead-privacy">
+                  Concordo com a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>
+                  e autorizo o uso dos meus dados conforme descrito.
+                </label>
+              </div>
+              <span class="form-error-msg" id="err-privacy" role="alert">É necessário aceitar a política de privacidade.</span>
+            </div>
+
+            <div class="alert alert--error" id="form-alert-error" role="alert">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" style="flex-shrink:0;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <span id="form-alert-error-msg">Ocorreu um erro. Tente novamente.</span>
+            </div>
+
+            <div class="step-actions step-actions--split">
+              <button type="button" class="btn btn--ghost-dark" id="prev-step-3">← Voltar</button>
+              <button type="submit" class="btn btn--primary btn--lg" id="submit-btn" style="flex:1;justify-content:center;">
+                <span class="btn-text">
+                  <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                  </svg>
+                  QUERO RECEBER MEU MATERIAL
+                </span>
+                <span class="spinner spinner--dark" style="display:none;" id="submit-spinner" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+        <div class="success-screen" id="success-screen" aria-live="polite">
+          <div class="success-icon" aria-hidden="true">
+            <svg width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <h3>Material enviado com sucesso!</h3>
+          <p>
+            Verifique sua caixa de entrada (e a pasta de spam).
+            O material foi enviado para <strong id="success-email"></strong>.
+          </p>
+          <p style="font-size:.82rem;color:var(--gray-text);margin-top:.5rem;">
+            Se não receber em alguns minutos, entre em contato conosco.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__logo-wrap">
+          <img src="assets/images/logo-white.png" alt="Oficina de Estudos" class="footer__logo-img" />
+        </div>
+        <p class="footer__desc">
+          Transformando a forma como você estuda, com materiais e recursos educacionais de qualidade.
+        </p>
+      </div>
+      <div class="footer__col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#solicitar">Receber Material</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacidade.html">Política de Privacidade</a></li>
+          <li><a href="privacidade.html#lgpd">LGPD</a></li>
+          <li><a href="privacidade.html#exclusao">Exclusão de Dados</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; <span id="footer-year"></span> Oficina de Estudos. Todos os direitos reservados.</span>
+      <a href="privacidade.html">Política de Privacidade</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script src="assets/js/config.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/landing.js"></script>
+
+<script>
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const mainNav = document.getElementById('main-nav');
+  if (hamburgerBtn && mainNav) {
+    hamburgerBtn.addEventListener('click', () => {
+      const isOpen = mainNav.classList.toggle('open');
+      hamburgerBtn.setAttribute('aria-expanded', isOpen.toString());
+      hamburgerBtn.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+    });
+    mainNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mainNav.classList.remove('open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+  const fy = document.getElementById('footer-year');
+  if (fy) fy.textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
