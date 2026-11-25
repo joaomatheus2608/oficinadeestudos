@@ -229,7 +229,47 @@ serve(async (req: Request) => {
       leadId = insertedLead.id;
     }
 
-    // 4. Create initial email_send record (processing)
+    // 4. Enforce Resend free-tier quotas (100/day, 3000/month)
+    const dailyLimit = Number(Deno.env.get("DAILY_EMAIL_LIMIT") ?? "100");
+    const monthlyLimit = Number(Deno.env.get("MONTHLY_EMAIL_LIMIT") ?? "3000");
+    const nowIso = new Date().toISOString();
+    const startOfDayUtc = `${nowIso.slice(0, 10)}T00:00:00.000Z`;
+    const startOfMonthUtc = `${nowIso.slice(0, 7)}-01T00:00:00.000Z`;
+
+    const [{ count: dailyCount, error: dailyErr }, { count: monthlyCount, error: monthlyErr }] =
+      await Promise.all([
+        supabase
+          .from("email_sends")
+          .select("id", { count: "exact", head: true })
+          .in("status", ["sent", "delivered", "processing"])
+          .gte("created_at", startOfDayUtc),
+        supabase
+          .from("email_sends")
+          .select("id", { count: "exact", head: true })
+          .in("status", ["sent", "delivered", "processing"])
+          .gte("created_at", startOfMonthUtc),
+      ]);
+
+    if (dailyErr || monthlyErr) {
+      console.error("Quota check error:", dailyErr ?? monthlyErr);
+      return reply({ error: "Erro ao verificar disponibilidade de envio." }, 500);
+    }
+
+    if ((dailyCount ?? 0) >= dailyLimit) {
+      return reply(
+        { error: "Limite diário de envios atingido. Tente novamente amanhã!" },
+        429
+      );
+    }
+
+    if ((monthlyCount ?? 0) >= monthlyLimit) {
+      return reply(
+        { error: "Limite mensal de envios atingido. Entre em contato com a Oficina de Estudos." },
+        429
+      );
+    }
+
+    // 5. Create initial email_send record (processing)
     const { data: sendRecord, error: sendInsertErr } = await supabase
       .from("email_sends")
       .insert({
