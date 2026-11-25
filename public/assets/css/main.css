@@ -129,7 +129,7 @@ p { font-size: 1rem; }
 }
 .header__logo { display: flex; align-items: center; }
 .header__logo-img {
-  height: 54px;
+  height: 78px;
   width: auto;
   object-fit: contain;
 }
@@ -494,7 +494,7 @@ p { font-size: 1rem; }
 }
 .footer__logo-wrap { margin-bottom: 1rem; }
 .footer__logo-img {
-  height: 56px;
+  height: 84px;
   width: auto;
   object-fit: contain;
 }
