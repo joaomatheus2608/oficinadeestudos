@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,112 +7,119 @@
   <meta name="robots" content="noindex, follow" />
   <link rel="icon" type="image/png" href="assets/images/logo-blue.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/main.css" />
 </head>
-
 <body>
-  <header class="header">
-    <div class="header__inner">
-      <a href="index.html" class="header__logo" aria-label="Oficina de Estudos — Início">
-        <img src="assets/images/logo-white.png" alt="Oficina de Estudos" class="header__logo-img" />
-      </a>
-      <nav class="header__nav">
-        <a href="index.html">Voltar ao início</a>
-      </nav>
-    </div>
-  </header>
+<header class="header">
+  <div class="header__inner">
+    <a href="index.html" class="header__logo" aria-label="Oficina de Estudos — Início">
+      <img src="assets/images/logo-white.png" alt="Oficina de Estudos" class="header__logo-img" />
+    </a>
+    <nav class="header__nav">
+      <a href="index.html" class="btn btn--primary">Voltar ao início</a>
+    </nav>
+  </div>
+</header>
 
-  <main>
-    <div class="privacy">
-      <h1 id="topo">Política de Privacidade</h1>
-      <p><em>Última atualização: Novembro de 2026</em></p>
+<main style="background:var(--white);">
+  <div class="privacy">
+    <h1 id="topo">Política de Privacidade e Cookies</h1>
+    <p><em>Última atualização: Novembro de 2026</em></p>
 
-      <h2>1. Introdução</h2>
-      <p>
-        A <strong>Oficina de Estudos</strong> respeita a privacidade dos seus usuários e está comprometida com a
-        proteção
-        dos dados pessoais, em conformidade com a Lei Geral de Proteção de Dados Pessoais (LGPD — Lei nº 13.709/2018).
-      </p>
+    <h2>1. Introdução e Controlador</h2>
+    <p>
+      A <strong>Oficina de Estudos</strong> respeita a privacidade dos usuários e realiza o tratamento de dados pessoais
+      em total conformidade com a Lei Geral de Proteção de Dados Pessoais (LGPD — Lei nº 13.709/2018) e o Marco Civil
+      da Internet (Lei nº 12.965/2014).
+    </p>
 
-      <h2>2. Dados Coletados</h2>
-      <p>Coletamos os seguintes dados ao solicitar materiais gratuitos:</p>
-      <ul>
-        <li>Nome completo</li>
-        <li>Endereço de e-mail</li>
-        <li>Número de telefone/WhatsApp</li>
-        <li>Data e horário do cadastro</li>
-        <li>Registros de envio de e-mail</li>
-      </ul>
+    <h2>2. Dados Coletados</h2>
+    <p>Coletamos apenas os dados estritamente necessários quando o visitante solicita nossos materiais gratuitos:</p>
+    <ul>
+      <li>Nome completo;</li>
+      <li>Endereço de e-mail;</li>
+      <li>Número de telefone / WhatsApp;</li>
+      <li>Registro de consentimento, data e horário do cadastro;</li>
+      <li>Status técnico de entrega do e-mail solicitado.</li>
+    </ul>
 
-      <h2>3. Finalidade do Tratamento</h2>
-      <p>Seus dados são utilizados exclusivamente para:</p>
-      <ul>
-        <li>Enviar o material gratuito solicitado ao e-mail cadastrado;</li>
-        <li>Comunicar eventuais novidades, materiais e oportunidades educacionais;</li>
-        <li>Melhorar nossos serviços e conteúdos.</li>
-      </ul>
+    <h2>3. Finalidade e Base Legal (Art. 7º da LGPD)</h2>
+    <p>Os dados são tratados mediante o seu <strong>consentimento expresso (Art. 7º, I)</strong> e para execução da sua solicitação (Art. 7º, V), com as seguintes finalidades:</p>
+    <ul>
+      <li>Enviar o material gratuito solicitado para o e-mail cadastrado;</li>
+      <li>Realizar atendimento ou esclarecer dúvidas via WhatsApp/e-mail sobre os conteúdos da Oficina de Estudos;</li>
+      <li>Prevenir fraudes, cadastros duplicados e disparos automáticos (spam).</li>
+    </ul>
 
-      <h2>4. Compartilhamento de Dados</h2>
-      <p>
-        Não compartilhamos seus dados pessoais com terceiros para fins comerciais.
-        Utilizamos fornecedores de tecnologia (BD e Resend) para armazenamento e envio de e-mails,
-        que seguem suas próprias políticas de privacidade e segurança.
-      </p>
+    <h2>4. Compartilhamento e Operadores de Dados</h2>
+    <p>
+      Não vendemos, alugamos ou cedemos seus dados a terceiros para fins comerciais. Para viabilizar o funcionamento
+      técnico do serviço, os dados são processados com segurança pelos seguintes operadores:
+    </p>
+    <ul>
+      <li><strong>Supabase:</strong> armazenamento seguro em banco de dados com criptografia e controle de acesso restrito (RLS);</li>
+      <li><strong>Resend:</strong> infraestrutura de envio transacional do material por e-mail;</li>
+      <li><strong>Vercel:</strong> hospedagem segura da interface web com certificado HTTPS.</li>
+    </ul>
 
-      <h2>5. Segurança dos Dados</h2>
-      <p>
-        Adotamos medidas técnicas e organizacionais apropriadas para proteger seus dados contra acesso não autorizado,
-        alteração, divulgação ou destruição. Os dados são armazenados em banco de dados seguro com criptografia em
-        repouso.
-      </p>
+    <h2>5. Prazo de Armazenamento</h2>
+    <p>
+      Os dados são mantidos pelo período necessário para cumprir as finalidades descritas nesta Política ou até que
+      o titular solicite sua exclusão ou revogue o consentimento.
+    </p>
 
-      <h2 id="lgpd">6. Seus Direitos (LGPD)</h2>
-      <p>Conforme a LGPD, você tem direito a:</p>
-      <ul>
-        <li>Confirmar a existência de tratamento dos seus dados;</li>
-        <li>Acessar seus dados;</li>
-        <li>Corrigir dados incompletos, inexatos ou desatualizados;</li>
-        <li>Solicitar a anonimização, bloqueio ou eliminação dos seus dados;</li>
-        <li>Revogar o consentimento a qualquer momento;</li>
-        <li>Obter informações sobre o compartilhamento dos seus dados.</li>
-      </ul>
+    <h2 id="lgpd">6. Direitos do Titular (Art. 18 da LGPD)</h2>
+    <p>Você pode exercer a qualquer momento, gratuitamente, os seguintes direitos:</p>
+    <ul>
+      <li>Confirmar a existência de tratamento e acessar seus dados pessoais;</li>
+      <li>Solicitar a correção de dados incompletos, inexatos ou desatualizados;</li>
+      <li>Solicitar a anonimização, bloqueio ou eliminação de dados desnecessários ou excessivos;</li>
+      <li>Revogar o consentimento previamente fornecido;</li>
+      <li>Obter informações sobre as entidades com as quais seus dados são compartilhados.</li>
+    </ul>
 
-      <h2 id="exclusao">7. Exclusão de Dados</h2>
-      <p>
-        Para solicitar a exclusão dos seus dados, envie um e-mail para
-        <strong>privacidade@oficinadeestudos.com.br</strong> informando seu nome e e-mail cadastrado.
-        Atenderemos sua solicitação em até 15 dias úteis.
-      </p>
+    <h2 id="exclusao">7. Como Solicitar Exclusão ou DPO (Encarregado)</h2>
+    <p>
+      Para exercer qualquer direito previsto na LGPD ou solicitar a exclusão definitiva dos seus dados, envie um e-mail
+      para nosso Encarregado de Proteção de Dados (DPO):
+      <br /><strong>E-mail:</strong> <strong>privacidade@oficina.joaomatheus.site</strong> (ou pelo WhatsApp oficial de atendimento)
+      informando seu nome e o e-mail cadastrado. Sua solicitação será atendida em até <strong>15 dias úteis</strong>.
+    </p>
 
-      <h2>8. Cookies</h2>
-      <p>
-        Este site pode utilizar cookies essenciais para funcionamento técnico.
-        Não utilizamos cookies de rastreamento ou publicidade de terceiros sem seu consentimento.
-      </p>
+    <h2 id="cookies">8. Política de Cookies</h2>
+    <p>
+      Cookies são pequenos arquivos armazenados no navegador para garantir o funcionamento adequado do site.
+      Utilizamos:
+    </p>
+    <ul>
+      <li><strong>Cookies Essenciais e Funcionais:</strong> necessários para segurança, prevenção contra envios repetidos e registro da sua escolha de privacidade (<code>oe_cookie_consent</code>).</li>
+      <li><strong>Cookies Analíticos (opcionais):</strong> ativados apenas caso você selecione "Aceitar Todos" no aviso de cookies.</li>
+    </ul>
+    <p>
+      Você pode alterar ou revogar sua preferência a qualquer momento clicando em <strong>"Gerenciar Cookies"</strong>
+      no rodapé da página ou desativando cookies diretamente nas configurações do seu navegador.
+    </p>
 
-      <h2>9. Contato</h2>
-      <p>
-        Em caso de dúvidas sobre esta política ou sobre o tratamento dos seus dados, entre em contato:
-        <br><strong>E-mail:</strong> privacidade@oficinadeestudos.com.br
-      </p>
+    <p style="margin-top:2rem;">
+      <a href="index.html" style="color:var(--orange);font-weight:700;">← Voltar para a página inicial</a>
+    </p>
+  </div>
+</main>
 
-      <p style="margin-top:2rem;">
-        <a href="index.html" style="color:var(--blue);font-weight:600;">← Voltar ao início</a>
-      </p>
-    </div>
-  </main>
-
-  <footer class="footer" role="contentinfo">
-    <div class="container">
-      <div class="footer__bottom" style="border-top:none;padding-top:0;">
-        <span>&copy;
-          <script>document.write(new Date().getFullYear())</script> Oficina de Estudos. Todos os direitos reservados.
-        </span>
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__bottom" style="border-top:none;padding-top:0;">
+      <span>&copy; <span id="footer-year"></span> Oficina de Estudos. Todos os direitos reservados.</span>
+      <div style="display:flex;gap:1.25rem;flex-wrap:wrap;">
         <a href="privacidade.html">Política de Privacidade</a>
+        <a href="termos.html">Termos de Uso</a>
+        <a href="#" id="manage-cookies-btn">Gerenciar Cookies</a>
       </div>
     </div>
-  </footer>
+  </div>
+</footer>
+<script src="assets/js/cookies.js"></script>
+<script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
 </body>
-
 </html>

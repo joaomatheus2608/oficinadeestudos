@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Termos de Uso — Oficina de Estudos</title>
+  <meta name="robots" content="noindex, follow" />
+  <link rel="icon" type="image/png" href="assets/images/logo-blue.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body>
+<header class="header">
+  <div class="header__inner">
+    <a href="index.html" class="header__logo" aria-label="Oficina de Estudos — Início">
+      <img src="assets/images/logo-white.png" alt="Oficina de Estudos" class="header__logo-img" />
+    </a>
+    <nav class="header__nav">
+      <a href="index.html" class="btn btn--primary">Voltar ao início</a>
+    </nav>
+  </div>
+</header>
+
+<main style="background:var(--white);">
+  <div class="privacy">
+    <h1>Termos de Uso</h1>
+    <p><em>Última atualização: Novembro de 2026</em></p>
+
+    <h2>1. Aceitação dos Termos</h2>
+    <p>
+      Ao acessar o site da <strong>Oficina de Estudos</strong> e solicitar qualquer material gratuito disponibilizado
+      nesta plataforma, o usuário declara ter lido, compreendido e aceito integralmente estes Termos de Uso e a
+      nossa <a href="privacidade.html" style="color:var(--orange);font-weight:600;text-decoration:underline;">Política de Privacidade</a>.
+    </p>
+
+    <h2>2. Objeto e Gratuidade</h2>
+    <p>
+      A plataforma tem como finalidade disponibilizar materiais educacionais digitais gratuitos mediante cadastro
+      prévio do interessado. A Oficina de Estudos reserva-se o direito de alterar, suspender ou encerrar campanhas
+      e materiais a qualquer momento, sem necessidade de aviso prévio.
+    </p>
+
+    <h2>3. Propriedade Intelectual</h2>
+    <p>
+      Todo o conteúdo disponibilizado (textos, apostilas, cronogramas, PDFs, imagens, marcas e identidade visual)
+      é de titularidade exclusiva da <strong>Oficina de Estudos</strong> ou de seus licenciadores, protegido pela
+      Lei de Direitos Autorais (Lei nº 9.610/1998).
+    </p>
+    <ul>
+      <li>É concedida licença pessoal, intransferível e não exclusiva apenas para uso próprio e estudo individual;</li>
+      <li>É expressamente proibida a venda, comercialização, reprodução em massa, distribuição pública ou modificação dos materiais sem autorização prévia por escrito.</li>
+    </ul>
+
+    <h2>4. Responsabilidade pelas Informações</h2>
+    <p>
+      O usuário compromete-se a fornecer dados verdadeiros, completos e atualizados (nome, e-mail válido e telefone).
+      A Oficina de Estudos não se responsabiliza por falhas de entrega decorrentes de e-mail digitado incorretamente,
+      caixa de entrada cheia ou bloqueios de spam do provedor do destinatário.
+    </p>
+
+    <h2>5. Caráter Educacional (Ausência de Garantia de Resultado)</h2>
+    <p>
+      Os materiais têm caráter exclusivamente informativo e de apoio pedagógico. O desempenho acadêmico ou aprovação
+      em vestibulares, ENEM ou concursos depende exclusivamente do esforço e dedicação individual de cada estudante,
+      não havendo garantia de aprovação.
+    </p>
+
+    <h2>6. Privacidade e Proteção de Dados (LGPD)</h2>
+    <p>
+      O tratamento dos dados pessoais coletados ocorre em conformidade com a Lei Geral de Proteção de Dados
+      (Lei nº 13.709/2018), conforme detalhado na <a href="privacidade.html" style="color:var(--orange);font-weight:600;text-decoration:underline;">Política de Privacidade</a>.
+    </p>
+
+    <h2>7. Legislação e Foro</h2>
+    <p>
+      Estes Termos são regidos pelas leis da República Federativa do Brasil. Eventuais controvérsias serão resolvidas
+      preferencialmente de forma amigável pelo canal de atendimento institucional e, persistindo, no foro competente
+      conforme a legislação brasileira vigente.
+    </p>
+
+    <p style="margin-top:2rem;">
+      <a href="index.html" style="color:var(--orange);font-weight:700;">← Voltar para a página inicial</a>
+    </p>
+  </div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__bottom" style="border-top:none;padding-top:0;">
+      <span>&copy; <span id="footer-year"></span> Oficina de Estudos. Todos os direitos reservados.</span>
+      <div style="display:flex;gap:1.25rem;flex-wrap:wrap;">
+        <a href="privacidade.html">Política de Privacidade</a>
+        <a href="termos.html">Termos de Uso</a>
+        <a href="#" id="manage-cookies-btn">Gerenciar Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/cookies.js"></script>
+<script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

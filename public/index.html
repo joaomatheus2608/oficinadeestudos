@@ -232,7 +232,7 @@
                 <input type="checkbox" id="lead-privacy" name="privacy" aria-required="true" />
                 <label for="lead-privacy">
                   Concordo com a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>
-                  e autorizo o uso dos meus dados conforme descrito.
+                  e os <a href="termos.html" target="_blank" rel="noopener">Termos de Uso</a>, e autorizo o uso dos meus dados para envio do material.
                 </label>
               </div>
               <span class="form-error-msg" id="err-privacy" role="alert">É necessário aceitar a política de privacidade.</span>
@@ -306,14 +306,19 @@
         <h4>Legal</h4>
         <ul>
           <li><a href="privacidade.html">Política de Privacidade</a></li>
-          <li><a href="privacidade.html#lgpd">LGPD</a></li>
-          <li><a href="privacidade.html#exclusao">Exclusão de Dados</a></li>
+          <li><a href="termos.html">Termos de Uso</a></li>
+          <li><a href="privacidade.html#cookies">Política de Cookies</a></li>
+          <li><a href="privacidade.html#exclusao">Exclusão de Dados (LGPD)</a></li>
         </ul>
       </div>
     </div>
     <div class="footer__bottom">
       <span>&copy; <span id="footer-year"></span> Oficina de Estudos. Todos os direitos reservados.</span>
-      <a href="privacidade.html">Política de Privacidade</a>
+      <div style="display:flex;gap:1.25rem;flex-wrap:wrap;">
+        <a href="privacidade.html">Política de Privacidade</a>
+        <a href="termos.html">Termos de Uso</a>
+        <a href="#" id="manage-cookies-btn">Gerenciar Cookies</a>
+      </div>
     </div>
   </div>
 </footer>
@@ -324,6 +329,7 @@
 <script src="assets/js/config.js"></script>
 <script src="assets/js/utils.js"></script>
 <script src="assets/js/landing.js"></script>
+<script src="assets/js/cookies.js"></script>
 
 <script>
   const hamburgerBtn = document.getElementById('hamburger-btn');
