@@ -1,9 +1,13 @@
 {
-  "cleanUrls": true,
+  "cleanUrls": false,
+  "redirects": [
+    { "source": "/admin", "destination": "/admin/login.html", "permanent": false },
+    { "source": "/admin/", "destination": "/admin/login.html", "permanent": false }
+  ],
   "rewrites": [
     { "source": "/", "destination": "/public/index.html" },
-    { "source": "/admin", "destination": "/admin/index.html" },
-    { "source": "/admin/(.*)", "destination": "/admin/$1" },
-    { "source": "/(.*)", "destination": "/public/$1" }
+    { "source": "/privacidade.html", "destination": "/public/privacidade.html" },
+    { "source": "/privacidade", "destination": "/public/privacidade.html" },
+    { "source": "/assets/(.*)", "destination": "/public/assets/$1" }
   ]
 }
