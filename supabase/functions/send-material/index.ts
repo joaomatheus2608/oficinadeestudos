@@ -1,13 +1,35 @@
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-};
+const DEFAULT_ALLOWED_ORIGINS = [
+  "https://oficinadeestudosrec.vercel.app",
+  "http://localhost:3000",
+  "http://localhost:5500",
+  "http://127.0.0.1:5500",
+];
 
-function jsonResponse(body: Record<string, unknown>, status = 200) {
+function getCorsHeaders(req: Request): Record<string, string> {
+  const origin = req.headers.get("origin") ?? "";
+  const extraOrigin = Deno.env.get("ALLOWED_ORIGIN") ?? "";
+  const allowed = extraOrigin
+    ? [...DEFAULT_ALLOWED_ORIGINS, extraOrigin]
+    : DEFAULT_ALLOWED_ORIGINS;
+
+  const allowOrigin = allowed.includes(origin) ? origin : allowed[0];
+
+  return {
+    "Access-Control-Allow-Origin": allowOrigin,
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Vary": "Origin",
+  };
+}
+
+function jsonResponse(
+  body: Record<string, unknown>,
+  status = 200,
+  corsHeaders: Record<string, string> = {}
+) {
   return new Response(JSON.stringify(body), {
     status,
     headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -100,21 +122,25 @@ function buildEmailHtml(params: {
 }
 
 serve(async (req: Request) => {
+  const cors = getCorsHeaders(req);
+  const reply = (body: Record<string, unknown>, status = 200) =>
+    jsonResponse(body, status, cors);
+
   if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+    return new Response("ok", { headers: cors });
   }
 
   if (req.method !== "POST") {
-    return jsonResponse({ error: "Método não permitido." }, 405);
+    return reply({ error: "Método não permitido." }, 405);
   }
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
   const resendApiKey = Deno.env.get("RESEND_API_KEY") ?? "";
-  const resendFrom = Deno.env.get("RESEND_FROM_EMAIL") ?? "Oficina de Estudos <materiais@oficinadeestudos.com.br>";
+  const resendFrom = Deno.env.get("RESEND_FROM_EMAIL") ?? "Oficina de Estudos <materiais@oficina.joaomatheus.site>";
 
   if (!supabaseUrl || !serviceRoleKey || !resendApiKey) {
-    return jsonResponse({ error: "Configuração do servidor incompleta." }, 500);
+    return reply({ error: "Configuração do servidor incompleta." }, 500);
   }
 
   const supabase = createClient(supabaseUrl, serviceRoleKey);
@@ -129,19 +155,19 @@ serve(async (req: Request) => {
 
     // 1. Server-side validation
     if (name.length < 3 || name.length > 120) {
-      return jsonResponse({ error: "Informe um nome válido (mínimo 3 caracteres)." }, 400);
+      return reply({ error: "Informe um nome válido (mínimo 3 caracteres)." }, 400);
     }
     if (!isValidEmail(email) || email.length > 200) {
-      return jsonResponse({ error: "Informe um e-mail válido." }, 400);
+      return reply({ error: "Informe um e-mail válido." }, 400);
     }
     if (!isValidPhoneBR(phone)) {
-      return jsonResponse({ error: "Informe um telefone/WhatsApp válido com DDD." }, 400);
+      return reply({ error: "Informe um telefone/WhatsApp válido com DDD." }, 400);
     }
     if (!privacyConsent) {
-      return jsonResponse({ error: "É obrigatório aceitar a política de privacidade." }, 400);
+      return reply({ error: "É obrigatório aceitar a política de privacidade." }, 400);
     }
     if (!campaignId) {
-      return jsonResponse({ error: "Campanha inválida." }, 400);
+      return reply({ error: "Campanha inválida." }, 400);
     }
 
     // 2. Verify active campaign
@@ -153,7 +179,7 @@ serve(async (req: Request) => {
       .maybeSingle();
 
     if (campError || !campaign) {
-      return jsonResponse({ error: "Nenhuma campanha ativa encontrada." }, 404);
+      return reply({ error: "Nenhuma campanha ativa encontrada." }, 404);
     }
 
     // 3. Check duplicate lead for same email + campaign
@@ -177,7 +203,7 @@ serve(async (req: Request) => {
         .maybeSingle();
 
       if (existingSend && ["sent", "delivered", "processing"].includes(existingSend.status)) {
-        return jsonResponse({
+        return reply({
           ok: true,
           message: "Este e-mail já recebeu o material desta campanha. Verifique sua caixa de entrada e spam.",
         });
@@ -198,7 +224,7 @@ serve(async (req: Request) => {
 
       if (leadError || !insertedLead) {
         console.error("Lead insert error:", leadError);
-        return jsonResponse({ error: "Erro ao registrar cadastro." }, 500);
+        return reply({ error: "Erro ao registrar cadastro." }, 500);
       }
       leadId = insertedLead.id;
     }
@@ -216,7 +242,7 @@ serve(async (req: Request) => {
 
     if (sendInsertErr || !sendRecord) {
       console.error("email_sends insert error:", sendInsertErr);
-      return jsonResponse({ error: "Erro ao iniciar envio." }, 500);
+      return reply({ error: "Erro ao iniciar envio." }, 500);
     }
 
     // 5. Generate signed URL for private material (7 days = 604800 seconds)
@@ -237,7 +263,7 @@ serve(async (req: Request) => {
         .from("email_sends")
         .update({ status: "failed", error_message: "Material da campanha não encontrado." })
         .eq("id", sendRecord.id);
-      return jsonResponse({ error: "Material da campanha indisponível no momento." }, 500);
+      return reply({ error: "Material da campanha indisponível no momento." }, 500);
     }
 
     // 6. Send email via Resend API
@@ -273,7 +299,7 @@ serve(async (req: Request) => {
           error_message: errMsg,
         })
         .eq("id", sendRecord.id);
-      return jsonResponse({ error: "Não foi possível enviar o e-mail. Tente novamente." }, 502);
+      return reply({ error: "Não foi possível enviar o e-mail. Tente novamente." }, 502);
     }
 
     // 7. Update email_sends with Resend ID & sent status
@@ -286,9 +312,9 @@ serve(async (req: Request) => {
       })
       .eq("id", sendRecord.id);
 
-    return jsonResponse({ ok: true, resend_id: resendData.id });
+    return reply({ ok: true, resend_id: resendData.id });
   } catch (err) {
     console.error("Unexpected error in send-material:", err);
-    return jsonResponse({ error: "Erro interno ao processar solicitação." }, 500);
+    return reply({ error: "Erro interno ao processar solicitação." }, 500);
   }
 });
