@@ -295,6 +295,7 @@
           <a href="leads.html?campaign=${c.id}" class="btn btn--sm btn--primary" style="margin-right:auto;">Ver Leads (${count})</a>
           ${!c.is_active ? `<button class="btn btn--sm btn--outline" onclick="activateCampaign('${c.id}')">Ativar</button>` : `<button class="btn btn--sm btn--ghost" onclick="deactivateCampaign('${c.id}')">Desativar</button>`}
           <button class="btn btn--sm btn--ghost" onclick="editCampaign('${c.id}')">Editar</button>
+          <button class="btn btn--sm btn--danger" onclick="deleteCampaign('${c.id}')" title="Excluir campanha">Excluir</button>
         </div>
       </div>
     `}).join('');
@@ -382,6 +383,48 @@
     const { error } = await sb.from('campaigns').update({ is_active: false, updated_at: new Date().toISOString() }).eq('id', id);
     if (error) { toast('Erro ao desativar campanha', 'error'); return; }
     toast('Campanha desativada.', 'info');
+    await loadCampaigns();
+  };
+
+  // ---- Delete Campaign ----
+  window.deleteCampaign = async function(id) {
+    const c = campaigns.find(x => x.id === id);
+    if (!c) return;
+    const count = leadCounts[id] || 0;
+
+    const msg = count > 0
+      ? `A campanha "${c.name}" possui ${count} lead(s) cadastrado(s).\n\nRecomendamos apenas Desativar para manter o histórico.\n\nDeseja EXCLUIR permanentemente a campanha E todos os leads/envios vinculados?`
+      : `Tem certeza que deseja excluir permanentemente a campanha "${c.name}"?`;
+
+    if (!confirm(msg)) return;
+
+    if (count > 0) {
+      const { error: leadErr } = await sb.from('leads').delete().eq('campaign_id', id);
+      if (leadErr) {
+        toast('Erro ao excluir leads da campanha: ' + leadErr.message, 'error');
+        return;
+      }
+    }
+
+    const { error } = await sb.from('campaigns').delete().eq('id', id);
+    if (error) {
+      toast('Erro ao excluir campanha: ' + error.message, 'error');
+      return;
+    }
+
+    // Best-effort cleanup of stored files
+    try {
+      if (c.image_url?.includes('/campaign-images/')) {
+        const imgPath = c.image_url.split('/campaign-images/').pop();
+        if (imgPath) await sb.storage.from('campaign-images').remove([imgPath]);
+      }
+      if (c.material_url?.includes('/campaign-materials/')) {
+        const matPath = c.material_url.split('/campaign-materials/').pop();
+        if (matPath) await sb.storage.from('campaign-materials').remove([matPath]);
+      }
+    } catch (_) {}
+
+    toast('Campanha excluída com sucesso.', 'success');
     await loadCampaigns();
   };
 
