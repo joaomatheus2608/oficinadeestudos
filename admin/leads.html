@@ -140,9 +140,9 @@
                 <th>Nome</th>
                 <th>Origem</th>
                 <th>E-mail / WhatsApp</th>
-                <th>Segmentação / Campanha</th>
-                <th>Cadastrado em</th>
-                <th>Status envio</th>
+                <th class="col-hide-tablet">Segmentação / Campanha</th>
+                <th class="col-hide-mobile">Cadastrado em</th>
+                <th class="col-hide-mobile">Status envio</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -331,9 +331,9 @@
           <td><strong style="font-size:.9rem;">${lead.name}</strong></td>
           <td>${originBadge(leadOrigin)}</td>
           <td style="font-size:.82rem;"><div>${lead.email}</div><div style="color:var(--gray-text);">${lead.phone || '—'}</div></td>
-          <td style="font-size:.82rem;max-width:220px;">${contextText}</td>
-          <td style="font-size:.82rem;white-space:nowrap;">${fmtDate(lead.created_at)}</td>
-          <td>${statusCell}</td>
+          <td class="col-hide-tablet" style="font-size:.82rem;max-width:220px;">${contextText}</td>
+          <td class="col-hide-mobile" style="font-size:.82rem;white-space:nowrap;">${fmtDate(lead.created_at)}</td>
+          <td class="col-hide-mobile">${statusCell}</td>
           <td style="white-space:nowrap;display:flex;gap:.4rem;align-items:center;">
             <button class="btn btn--sm btn--ghost" onclick="showLeadDetail('${lead.id}')">Ver</button>
             ${wa}

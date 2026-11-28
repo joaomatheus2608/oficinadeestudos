@@ -634,30 +634,74 @@ p { font-size: .95rem; }
   .login-page { grid-template-columns: 1fr; }
   .login-visual { display: none; }
   .charts-row { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
 }
-@media (max-width: 640px) {
+
+@media (max-width: 768px) {
   .admin-content { padding: 1rem; }
   .admin-topbar  { padding: 0 1rem; }
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: .75rem; }
+  .stat-card { padding: 1.1rem; min-width: 0; }
+  .stat-card__value { font-size: 1.6rem; }
+  .stat-card__icon { width: 36px; height: 36px; }
+  .card__header, .card__body { padding: 1rem; }
+  /* Ocultar colunas secundárias da tabela em tablet */
+  .data-table .col-hide-tablet { display: none; }
+  .filters-bar { gap: .6rem; }
+  .filter-group { min-width: 140px; }
+  .page-header { flex-direction: column; align-items: flex-start; margin-bottom: 1.25rem; }
+  .page-header__actions { width: 100%; }
+  .page-header__actions .btn { flex: 1; justify-content: center; }
+}
+
+@media (max-width: 640px) {
+  .admin-content { padding: .85rem; }
+  .admin-topbar  { padding: 0 .85rem; }
   .admin-topbar__subtitle { display: none; }
   .topbar-user span { display: none; }
   .admin-form .form-row { grid-template-columns: 1fr; }
-  .stats-grid { grid-template-columns: 1fr 1fr; gap: .75rem; }
-  .stat-card { padding: 1rem; min-width: 0; }
-  .stat-card__value { font-size: 1.5rem; }
-  .stat-card__label { font-size: .7rem; }
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: .6rem; margin-bottom: 1.25rem; }
+  .stat-card { padding: .9rem; min-width: 0; gap: .3rem; }
+  .stat-card__value { font-size: 1.4rem; }
+  .stat-card__label { font-size: .68rem; }
+  .stat-card__sub { font-size: .72rem; }
+  .stat-card__icon { width: 32px; height: 32px; }
+  .stat-card__icon svg { width: 16px; height: 16px; }
   .card { min-width: 0; }
-  .card__header, .card__body { padding: 1rem; }
-  .filters-bar { flex-direction: column; align-items: stretch; gap: .65rem; }
-  .filter-group { min-width: 0 !important; width: 100%; }
+  .card__header, .card__body { padding: .85rem; }
+  .card__header { flex-direction: column; align-items: flex-start; gap: .6rem; }
+  /* Filtros em coluna */
+  .filters-bar { flex-direction: column; align-items: stretch; gap: .55rem; margin-bottom: 1rem; }
+  .filter-group { min-width: 0 !important; width: 100%; flex: none; }
+  .filter-group select,
+  .filter-group input { font-size: .85rem; padding: .55rem .8rem; }
   .filter-group .btn { margin-top: .25rem !important; width: 100%; justify-content: center; }
-  .data-table th, .data-table td { padding: .65rem .75rem; font-size: .8rem; }
+  /* Botão Limpar ocupa 100% */
+  #clear-filters { width: 100%; text-align: center; margin-top: 0 !important; }
+  /* Tabela — scroll horizontal + ocultar cols secundárias */
+  .table-wrap { border-radius: 0; }
+  .data-table th, .data-table td { padding: .6rem .65rem; font-size: .79rem; }
+  .data-table td .origin-badge,
+  .data-table td .status-badge { font-size: .66rem; padding: .2em .5em; }
+  .data-table .col-hide-mobile { display: none; }
+  /* Modal */
   .lead-info-grid { grid-template-columns: 1fr; }
-  .page-header { flex-direction: column; align-items: flex-start; margin-bottom: 1.25rem; }
-  .modal-overlay { padding: .75rem; }
+  .page-header { flex-direction: column; align-items: flex-start; margin-bottom: 1rem; gap: .5rem; }
+  .page-header__actions { width: 100%; }
+  .page-header__actions .btn { flex: 1; justify-content: center; }
+  .modal-overlay { padding: .5rem; align-items: flex-end; }
+  .modal { border-radius: var(--radius-md) var(--radius-md) 0 0; max-height: 92vh; }
   .modal__header, .modal__body, .modal__footer { padding: 1rem; }
-  .modal__footer { flex-wrap: wrap; }
-  .pagination { justify-content: center; text-align: center; padding: .85rem 1rem; }
+  .modal__footer { flex-wrap: wrap; gap: .5rem; }
+  .modal__footer .btn { flex: 1; justify-content: center; min-width: 100px; }
+  /* Paginação */
+  .pagination { flex-direction: column; gap: .5rem; padding: .75rem 1rem; text-align: center; }
+  .pagination__controls { justify-content: center; }
+  /* Page-header actions */
+  #export-btn { width: 100%; justify-content: center; }
 }
+
 @media (max-width: 400px) {
   .stats-grid { grid-template-columns: 1fr; }
+  .stat-card__value { font-size: 1.3rem; }
 }
