@@ -1,11 +1,9 @@
 {
   "outputDirectory": ".",
-  "cleanUrls": true,
-  "trailingSlash": false,
+  "cleanUrls": false,
   "redirects": [
-    { "source": "/admin", "destination": "/admin/login", "permanent": true },
-    { "source": "/admin/", "destination": "/admin/login", "permanent": true },
-    { "source": "/index.html", "destination": "/", "permanent": true }
+    { "source": "/admin", "destination": "/admin/login.html", "permanent": false },
+    { "source": "/admin/", "destination": "/admin/login.html", "permanent": false }
   ],
   "rewrites": [
     { "source": "/", "destination": "/public/funil-captacao-whatsapp.html" },
