@@ -1,19 +1,25 @@
 {
   "outputDirectory": ".",
-  "cleanUrls": false,
+  "cleanUrls": true,
+  "trailingSlash": false,
   "redirects": [
-    { "source": "/admin", "destination": "/admin/login.html", "permanent": false },
-    { "source": "/admin/", "destination": "/admin/login.html", "permanent": false }
+    { "source": "/admin", "destination": "/admin/login", "permanent": true },
+    { "source": "/admin/", "destination": "/admin/login", "permanent": true },
+    { "source": "/public/index.html", "destination": "/funil-envio-email", "permanent": true },
+    { "source": "/public/funil-captacao-whatsapp.html", "destination": "/funil-captacao-whatsapp", "permanent": true },
+    { "source": "/public/privacidade.html", "destination": "/privacidade", "permanent": true },
+    { "source": "/public/termos.html", "destination": "/termos", "permanent": true },
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/privacidade.html", "destination": "/privacidade", "permanent": true },
+    { "source": "/termos.html", "destination": "/termos", "permanent": true },
+    { "source": "/funil-captacao-whatsapp.html", "destination": "/funil-captacao-whatsapp", "permanent": true },
+    { "source": "/funil-envio-email.html", "destination": "/funil-envio-email", "permanent": true }
   ],
   "rewrites": [
     { "source": "/", "destination": "/public/funil-captacao-whatsapp.html" },
     { "source": "/funil-captacao-whatsapp", "destination": "/public/funil-captacao-whatsapp.html" },
-    { "source": "/funil-captacao-whatsapp.html", "destination": "/public/funil-captacao-whatsapp.html" },
     { "source": "/funil-envio-email", "destination": "/public/index.html" },
-    { "source": "/funil-envio-email.html", "destination": "/public/index.html" },
-    { "source": "/privacidade.html", "destination": "/public/privacidade.html" },
     { "source": "/privacidade", "destination": "/public/privacidade.html" },
-    { "source": "/termos.html", "destination": "/public/termos.html" },
     { "source": "/termos", "destination": "/public/termos.html" },
     { "source": "/assets/(.*)", "destination": "/public/assets/$1" }
   ]
