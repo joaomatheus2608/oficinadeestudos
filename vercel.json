@@ -7,8 +7,14 @@
   ],
   "rewrites": [
     { "source": "/", "destination": "/public/index.html" },
+    { "source": "/funil-envio-email", "destination": "/public/index.html" },
+    { "source": "/funil-envio-email.html", "destination": "/public/index.html" },
+    { "source": "/funil-captacao-whatsapp", "destination": "/public/funil-captacao-whatsapp.html" },
+    { "source": "/funil-captacao-whatsapp.html", "destination": "/public/funil-captacao-whatsapp.html" },
     { "source": "/privacidade.html", "destination": "/public/privacidade.html" },
     { "source": "/privacidade", "destination": "/public/privacidade.html" },
+    { "source": "/termos.html", "destination": "/public/termos.html" },
+    { "source": "/termos", "destination": "/public/termos.html" },
     { "source": "/assets/(.*)", "destination": "/public/assets/$1" }
   ]
 }

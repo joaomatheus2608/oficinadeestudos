@@ -4,11 +4,21 @@
   status = 200
 
 [[redirects]]
+  from = "/funil-envio-email"
+  to = "/public/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/funil-captacao-whatsapp"
+  to = "/public/funil-captacao-whatsapp.html"
+  status = 200
+
+[[redirects]]
   from = "/admin"
-  to = "/admin/index.html"
+  to = "/admin/login.html"
   status = 200
 
 [[redirects]]
   from = "/admin/"
-  to = "/admin/index.html"
+  to = "/admin/login.html"
   status = 200

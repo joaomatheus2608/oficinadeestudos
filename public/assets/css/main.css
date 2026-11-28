@@ -628,6 +628,59 @@ p { font-size: 1rem; }
 .animate-fadein { animation: fadeInUp .5s ease both; }
 .animate-fadein-delay-2 { animation-delay: .18s; }
 
+/* ---- 5-Step WhatsApp Timeline & Choice Cards ---- */
+.wa-timeline__track {
+  left: 10%;
+  right: 10%;
+}
+.wa-timeline__steps {
+  grid-template-columns: repeat(5, 1fr);
+}
+.choice-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .75rem;
+  margin-top: .5rem;
+}
+.choice-card {
+  width: 100%;
+  text-align: left;
+  padding: 1rem 1.15rem;
+  background: var(--gray-light);
+  border: 2px solid var(--gray-mid);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+}
+.choice-card:hover {
+  border-color: var(--blue-mid);
+  background: var(--white);
+  transform: translateY(-1px);
+}
+.choice-card.selected {
+  border-color: var(--orange);
+  background: rgba(255, 85, 0, .06);
+  box-shadow: 0 0 0 3px rgba(255, 85, 0, .16);
+}
+.choice-card__title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--blue-deep);
+}
+.choice-card.selected .choice-card__title {
+  color: var(--orange-dark);
+}
+.choice-card__sub {
+  font-size: .82rem;
+  color: var(--gray-text);
+  line-height: 1.4;
+}
+
 /* ---- Cookie Consent Banner (LGPD) ---- */
 .cookie-banner {
   position: fixed;

@@ -61,6 +61,49 @@
           <input type="search" id="filter-search" placeholder="Digite para filtrar…" />
         </div>
         <div class="filter-group">
+          <label>Origem</label>
+          <select id="filter-origin">
+            <option value="">Todos</option>
+            <option value="whatsapp">Funil WhatsApp</option>
+            <option value="email">Funil E-mail</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Interesse</label>
+          <select id="filter-interest">
+            <option value="">Todos</option>
+            <option value="enem">ENEM</option>
+            <option value="ssa">SSA</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Ano escolar (2027)</label>
+          <select id="filter-year">
+            <option value="">Todos</option>
+            <option value="concluiu">Concluiu o Ensino Médio</option>
+            <option value="9_ano">9º ano</option>
+            <option value="1_ano">1º ano</option>
+            <option value="2_ano">2º ano</option>
+            <option value="3_ano">3º ano</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Modalidade</label>
+          <select id="filter-modality">
+            <option value="">Todas</option>
+            <option value="online">Online</option>
+            <option value="presencial">Presencial</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Rede de ensino</label>
+          <select id="filter-network">
+            <option value="">Todas</option>
+            <option value="publica">Pública</option>
+            <option value="particular">Particular</option>
+          </select>
+        </div>
+        <div class="filter-group">
           <label>Campanha</label>
           <select id="filter-campaign"><option value="">Todas</option></select>
         </div>
@@ -95,9 +138,9 @@
             <thead>
               <tr>
                 <th>Nome</th>
-                <th>E-mail</th>
-                <th>Telefone</th>
-                <th>Campanha</th>
+                <th>Origem</th>
+                <th>E-mail / WhatsApp</th>
+                <th>Segmentação / Campanha</th>
                 <th>Cadastrado em</th>
                 <th>Status envio</th>
                 <th>Ações</th>
@@ -178,11 +221,31 @@
     }
   }
 
+  const ORIGIN_LABELS = {
+    whatsapp: 'Funil WhatsApp',
+    email: 'Funil E-mail',
+  };
+  const INTEREST_LABELS = { enem: 'ENEM', ssa: 'SSA' };
+  const YEAR_LABELS = {
+    concluiu: 'Concluiu o Ensino Médio',
+    '9_ano': '9º ano',
+    '1_ano': '1º ano',
+    '2_ano': '2º ano',
+    '3_ano': '3º ano',
+  };
+  const MODALITY_LABELS = { online: 'Online', presencial: 'Presencial' };
+  const NETWORK_LABELS = { publica: 'Pública', particular: 'Particular' };
+
+  function originBadge(origin) {
+    const o = origin === 'whatsapp' ? 'whatsapp' : 'email';
+    return `<span class="origin-badge origin-badge--${o}">${ORIGIN_LABELS[o]}</span>`;
+  }
+
   // ---- Load leads ----
   async function loadLeads() {
     const { data, error } = await sb
       .from('leads')
-      .select('id, name, email, phone, created_at, campaign_id, privacy_consent, campaigns(name), email_sends(id, status, sent_at, created_at)')
+      .select('id, name, email, phone, created_at, campaign_id, privacy_consent, origin, entry_page, funnel_id, interest, school_year_2027, modality, school_network, campaigns(name), email_sends(id, status, sent_at, created_at)')
       .order('created_at', { ascending: false });
 
     if (error) { toast('Erro ao carregar leads: ' + error.message, 'error'); return; }
@@ -193,20 +256,31 @@
   // ---- Filters ----
   function applyFilters() {
     const search   = document.getElementById('filter-search').value.toLowerCase();
+    const origin   = document.getElementById('filter-origin').value;
+    const interest = document.getElementById('filter-interest').value;
+    const year     = document.getElementById('filter-year').value;
+    const modality = document.getElementById('filter-modality').value;
+    const network  = document.getElementById('filter-network').value;
     const campaign = document.getElementById('filter-campaign').value;
     const status   = document.getElementById('filter-status').value;
     const dateFrom = document.getElementById('filter-date-from').value;
     const dateTo   = document.getElementById('filter-date-to').value;
 
     filtered = allLeads.filter(l => {
+      const leadOrigin    = l.origin === 'whatsapp' ? 'whatsapp' : 'email';
       const matchSearch   = !search || l.name.toLowerCase().includes(search) || l.email.toLowerCase().includes(search);
+      const matchOrigin   = !origin || leadOrigin === origin;
+      const matchInterest = !interest || l.interest === interest;
+      const matchYear     = !year || l.school_year_2027 === year;
+      const matchModality = !modality || l.modality === modality;
+      const matchNetwork  = !network || l.school_network === network;
       const matchCampaign = !campaign || l.campaign_id === campaign;
       const latestSend    = l.email_sends?.[l.email_sends.length - 1];
-      const matchStatus   = !status || latestSend?.status === status || (!latestSend && status === 'pending');
+      const matchStatus   = !status || (leadOrigin === 'email' && (latestSend?.status === status || (!latestSend && status === 'pending')));
       const created       = new Date(l.created_at);
       const matchFrom     = !dateFrom || created >= new Date(dateFrom);
       const matchTo       = !dateTo   || created <= new Date(dateTo + 'T23:59:59');
-      return matchSearch && matchCampaign && matchStatus && matchFrom && matchTo;
+      return matchSearch && matchOrigin && matchInterest && matchYear && matchModality && matchNetwork && matchCampaign && matchStatus && matchFrom && matchTo;
     });
 
     const selectedCamp = campaigns.find(c => c.id === campaign);
@@ -232,20 +306,34 @@
       tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:3rem;color:var(--gray-text);">Nenhum lead encontrado.</td></tr>';
     } else {
       tbody.innerHTML = page.map(lead => {
+        const leadOrigin = lead.origin === 'whatsapp' ? 'whatsapp' : 'email';
         const latestSend = lead.email_sends?.[lead.email_sends.length - 1];
-        const statusVal  = latestSend?.status || 'pending';
+        const statusCell = leadOrigin === 'whatsapp'
+          ? '<span style="color:var(--gray-text);font-size:.82rem;">—</span>'
+          : statusBadge(latestSend?.status || 'pending');
+
+        const segParts = [
+          INTEREST_LABELS[lead.interest],
+          YEAR_LABELS[lead.school_year_2027],
+          MODALITY_LABELS[lead.modality],
+          NETWORK_LABELS[lead.school_network],
+        ].filter(Boolean);
+        const contextText = leadOrigin === 'whatsapp'
+          ? (segParts.join(' · ') || '—')
+          : (lead.campaigns?.name || '—');
+
         const wa = lead.phone ? `<a href="${whatsAppLink(lead.phone)}" target="_blank" rel="noopener" class="btn btn--sm" style="background:#25d366;border-color:#25d366;color:#fff;padding:.35rem .75rem;font-size:.78rem;" title="Chamar no WhatsApp">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           WhatsApp
-        </a>` : '<span style="color:var(--gray-text);font-size:.82rem;">—</span>';
+        </a>` : '';
 
         return `<tr>
           <td><strong style="font-size:.9rem;">${lead.name}</strong></td>
-          <td style="font-size:.85rem;">${lead.email}</td>
-          <td style="font-size:.85rem;white-space:nowrap;">${lead.phone || '—'}</td>
-          <td style="font-size:.82rem;">${lead.campaigns?.name || '—'}</td>
+          <td>${originBadge(leadOrigin)}</td>
+          <td style="font-size:.82rem;"><div>${lead.email}</div><div style="color:var(--gray-text);">${lead.phone || '—'}</div></td>
+          <td style="font-size:.82rem;max-width:220px;">${contextText}</td>
           <td style="font-size:.82rem;white-space:nowrap;">${fmtDate(lead.created_at)}</td>
-          <td>${statusBadge(statusVal)}</td>
+          <td>${statusCell}</td>
           <td style="white-space:nowrap;display:flex;gap:.4rem;align-items:center;">
             <button class="btn btn--sm btn--ghost" onclick="showLeadDetail('${lead.id}')">Ver</button>
             ${wa}
@@ -266,16 +354,24 @@
     const lead = allLeads.find(l => l.id === id);
     if (!lead) return;
     currentDetailLeadId = id;
+    const leadOrigin = lead.origin === 'whatsapp' ? 'whatsapp' : 'email';
     const latestSend = lead.email_sends?.[lead.email_sends.length - 1];
     document.getElementById('lead-detail-grid').innerHTML = `
       <div class="lead-info-item"><div class="lead-info-item__label">Nome</div><div class="lead-info-item__value">${lead.name}</div></div>
+      <div class="lead-info-item"><div class="lead-info-item__label">WhatsApp / Telefone</div><div class="lead-info-item__value">${lead.phone || '—'}</div></div>
       <div class="lead-info-item"><div class="lead-info-item__label">E-mail</div><div class="lead-info-item__value">${lead.email}</div></div>
-      <div class="lead-info-item"><div class="lead-info-item__label">Telefone/WhatsApp</div><div class="lead-info-item__value">${lead.phone || '—'}</div></div>
-      <div class="lead-info-item"><div class="lead-info-item__label">Campanha</div><div class="lead-info-item__value">${lead.campaigns?.name || '—'}</div></div>
       <div class="lead-info-item"><div class="lead-info-item__label">Cadastrado em</div><div class="lead-info-item__value">${fmtDate(lead.created_at)}</div></div>
+      <div class="lead-info-item"><div class="lead-info-item__label">Origem</div><div class="lead-info-item__value">${originBadge(leadOrigin)}</div></div>
+      <div class="lead-info-item"><div class="lead-info-item__label">Funil utilizado</div><div class="lead-info-item__value">${lead.funnel_id || (leadOrigin === 'whatsapp' ? 'funil-whatsapp' : 'funil-email')}</div></div>
+      <div class="lead-info-item"><div class="lead-info-item__label">Interesse</div><div class="lead-info-item__value">${INTEREST_LABELS[lead.interest] || '—'}</div></div>
+      <div class="lead-info-item"><div class="lead-info-item__label">Ano escolar (2027)</div><div class="lead-info-item__value">${YEAR_LABELS[lead.school_year_2027] || '—'}</div></div>
+      <div class="lead-info-item"><div class="lead-info-item__label">Modalidade</div><div class="lead-info-item__value">${MODALITY_LABELS[lead.modality] || '—'}</div></div>
+      <div class="lead-info-item"><div class="lead-info-item__label">Rede de ensino</div><div class="lead-info-item__value">${NETWORK_LABELS[lead.school_network] || '—'}</div></div>
+      <div class="lead-info-item"><div class="lead-info-item__label">Campanha</div><div class="lead-info-item__value">${lead.campaigns?.name || '—'}</div></div>
       <div class="lead-info-item"><div class="lead-info-item__label">Consentimento LGPD</div><div class="lead-info-item__value">${lead.privacy_consent ? '✅ Sim' : '❌ Não'}</div></div>
+      ${leadOrigin === 'email' ? `
       <div class="lead-info-item"><div class="lead-info-item__label">Status do envio</div><div class="lead-info-item__value">${statusBadge(latestSend?.status || 'pending')}</div></div>
-      <div class="lead-info-item"><div class="lead-info-item__label">Data do envio</div><div class="lead-info-item__value">${fmtDate(latestSend?.sent_at)}</div></div>
+      <div class="lead-info-item"><div class="lead-info-item__label">Data do envio</div><div class="lead-info-item__value">${fmtDate(latestSend?.sent_at)}</div></div>` : ''}
     `;
     const waBtn = document.getElementById('lead-wa-btn');
     if (lead.phone) {
@@ -308,30 +404,33 @@
 
   // ---- Export ----
   document.getElementById('export-btn').addEventListener('click', () => {
-    const rows = filtered.map(l => ({
-      Nome: l.name,
-      Email: l.email,
-      Telefone: l.phone || '',
-      Campanha: l.campaigns?.name || '',
-      Cadastrado: fmtDate(l.created_at),
-      Status: l.email_sends?.[l.email_sends.length - 1]?.status || 'pending',
-    }));
+    const rows = filtered.map(l => {
+      const leadOrigin = l.origin === 'whatsapp' ? 'whatsapp' : 'email';
+      return {
+        Nome: l.name,
+        Email: l.email,
+        WhatsApp: l.phone || '',
+        Origem: ORIGIN_LABELS[leadOrigin],
+        Interesse: INTEREST_LABELS[l.interest] || '',
+        Ano_Escolar_2027: YEAR_LABELS[l.school_year_2027] || '',
+        Modalidade: MODALITY_LABELS[l.modality] || '',
+        Rede_Ensino: NETWORK_LABELS[l.school_network] || '',
+        Campanha: l.campaigns?.name || '',
+        Cadastrado: fmtDate(l.created_at),
+        Status_Envio: leadOrigin === 'whatsapp' ? '' : (l.email_sends?.[l.email_sends.length - 1]?.status || 'pending'),
+      };
+    });
     exportCSV(rows, `leads_${new Date().toISOString().slice(0,10)}.csv`);
   });
 
   // ---- Filter events ----
   const dSearch = debounce(applyFilters, 300);
   document.getElementById('filter-search').addEventListener('input', dSearch);
-  document.getElementById('filter-campaign').addEventListener('change', applyFilters);
-  document.getElementById('filter-status').addEventListener('change', applyFilters);
-  document.getElementById('filter-date-from').addEventListener('change', applyFilters);
-  document.getElementById('filter-date-to').addEventListener('change', applyFilters);
+  ['filter-origin', 'filter-interest', 'filter-year', 'filter-modality', 'filter-network', 'filter-campaign', 'filter-status', 'filter-date-from', 'filter-date-to']
+    .forEach(id => document.getElementById(id).addEventListener('change', applyFilters));
   document.getElementById('clear-filters').addEventListener('click', () => {
-    document.getElementById('filter-search').value = '';
-    document.getElementById('filter-campaign').value = '';
-    document.getElementById('filter-status').value = '';
-    document.getElementById('filter-date-from').value = '';
-    document.getElementById('filter-date-to').value = '';
+    ['filter-search', 'filter-origin', 'filter-interest', 'filter-year', 'filter-modality', 'filter-network', 'filter-campaign', 'filter-status', 'filter-date-from', 'filter-date-to']
+      .forEach(id => { document.getElementById(id).value = ''; });
     applyFilters();
   });
 

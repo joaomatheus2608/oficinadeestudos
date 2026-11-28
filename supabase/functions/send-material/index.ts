@@ -235,6 +235,9 @@ serve(async (req: Request) => {
           phone,
           campaign_id: campaign.id,
           privacy_consent: true,
+          origin: "email",
+          entry_page: "/funil-envio-email",
+          funnel_id: "funil-email",
         })
         .select("id")
         .single();

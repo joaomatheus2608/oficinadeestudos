@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atendimento Personalizado — Oficina de Estudos</title>
+  <meta name="description" content="Responda rapidamente ao questionário da Oficina de Estudos e fale com nossa equipe no WhatsApp." />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/png" href="assets/images/logo-blue.png" />
+  <link rel="apple-touch-icon" href="assets/images/logo-blue.png" />
+
+  <meta property="og:site_name" content="Oficina de Estudos" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Atendimento Personalizado — Oficina de Estudos" />
+  <meta property="og:description" content="Escolha seu objetivo (ENEM ou SSA) e receba orientação personalizada no WhatsApp." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/main.css" />
+
+  <script>
+    window.__ENV = {
+      SUPABASE_URL: 'https://qliosdkejhnxybrluriw.supabase.co',
+      SUPABASE_ANON_KEY: 'sb_publishable__JOFD8fFD995D2517MRJAQ_WTJlFi30',
+      // Altere para o número oficial de atendimento (55 + DDD + número)
+      WHATSAPP_NUMBER: '5581999999999',
+    };
+  </script>
+</head>
+<body>
+
+<header class="header" role="banner">
+  <div class="header__inner">
+    <a href="funil-captacao-whatsapp.html" class="header__logo" aria-label="Oficina de Estudos — Início">
+      <img src="assets/images/logo-white.png" alt="Oficina de Estudos" class="header__logo-img" />
+    </a>
+    <nav class="header__nav" id="main-nav" role="navigation" aria-label="Navegação principal">
+      <a href="#questionario" class="btn btn--primary">FALAR NO WHATSAPP</a>
+    </nav>
+    <button class="header__hamburger" id="hamburger-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="main-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ============================================================
+     FORM SECTION (Guided 5-Step WhatsApp Funnel)
+     ============================================================ -->
+<section class="form-section" id="questionario" aria-labelledby="wa-heading">
+  <div class="form-section__dots" aria-hidden="true"></div>
+  <div class="container form-section__container">
+    <div class="section-header">
+      <span class="badge">Atendimento WhatsApp</span>
+      <h1 class="section-header__title" id="wa-heading">PREPARE-SE COM A <span>OFICINA</span></h1>
+      <p class="section-header__desc">Responda em menos de 1 minuto para direcionarmos você ao atendimento ideal.</p>
+    </div>
+
+    <div class="form-wrap">
+      <div class="form-wrap__header">
+        <div class="form-wrap__header-top">
+          <h3>Questionário Guiado</h3>
+          <span class="step-counter" id="wa-step-counter">Passo 1 de 5</span>
+        </div>
+        <div class="timeline" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" id="wa-timeline">
+          <div class="timeline__track wa-timeline__track">
+            <div class="timeline__fill" id="wa-timeline-fill" style="width:0%;"></div>
+          </div>
+          <div class="timeline__steps wa-timeline__steps">
+            <div class="timeline__step active" data-step="1">
+              <span class="timeline__dot">1</span>
+              <span class="timeline__label">Dados</span>
+            </div>
+            <div class="timeline__step" data-step="2">
+              <span class="timeline__dot">2</span>
+              <span class="timeline__label">Objetivo</span>
+            </div>
+            <div class="timeline__step" data-step="3">
+              <span class="timeline__dot">3</span>
+              <span class="timeline__label">Ano</span>
+            </div>
+            <div class="timeline__step" data-step="4">
+              <span class="timeline__dot">4</span>
+              <span class="timeline__label">Modalidade</span>
+            </div>
+            <div class="timeline__step" data-step="5">
+              <span class="timeline__dot">5</span>
+              <span class="timeline__label">Rede</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-wrap__body">
+        <form id="wa-funnel-form" novalidate autocomplete="on">
+
+          <!-- ETAPA 1: DADOS PESSOAIS -->
+          <div class="form-step active" data-step="1">
+            <div class="form-group">
+              <label for="wa-name">Nome completo <span class="required">*</span></label>
+              <input type="text" id="wa-name" name="name" class="form-control" placeholder="Digite seu nome completo" autocomplete="name" maxlength="120" />
+              <span class="form-error-msg" id="err-wa-name" role="alert">Por favor, informe seu nome completo (mínimo 3 caracteres).</span>
+            </div>
+
+            <div class="form-group">
+              <label for="wa-phone">WhatsApp <span class="required">*</span></label>
+              <input type="tel" id="wa-phone" name="phone" class="form-control" placeholder="(81) 99999-9999" autocomplete="tel" maxlength="20" />
+              <span class="form-error-msg" id="err-wa-phone" role="alert">Por favor, informe um WhatsApp válido com DDD.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="wa-email">E-mail <span class="required">*</span></label>
+              <input type="email" id="wa-email" name="email" class="form-control" placeholder="seu@email.com" autocomplete="email" maxlength="200" />
+              <span class="form-error-msg" id="err-wa-email" role="alert">Por favor, informe um e-mail válido.</span>
+            </div>
+
+            <div class="form-group">
+              <div class="checkbox-group">
+                <input type="checkbox" id="wa-privacy" name="privacy" />
+                <label for="wa-privacy">
+                  Concordo com a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>
+                  e os <a href="termos.html" target="_blank" rel="noopener">Termos de Uso</a>.
+                </label>
+              </div>
+              <span class="form-error-msg" id="err-wa-privacy" role="alert">É necessário aceitar a política de privacidade.</span>
+            </div>
+
+            <div class="step-actions">
+              <button type="button" class="btn btn--primary btn--lg btn--full" id="wa-next-1">
+                CONTINUAR
+                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- ETAPA 2: ENEM OU SSA -->
+          <div class="form-step" data-step="2">
+            <div class="form-group">
+              <label>Qual é o seu objetivo principal? <span class="required">*</span></label>
+              <div class="choice-grid" id="choice-interest">
+                <button type="button" class="choice-card" data-value="enem">
+                  <span class="choice-card__title">ENEM</span>
+                  <span class="choice-card__sub">Preparação focada no Exame Nacional do Ensino Médio</span>
+                </button>
+                <button type="button" class="choice-card" data-value="ssa">
+                  <span class="choice-card__title">SSA</span>
+                  <span class="choice-card__sub">Sistema Seriado de Avaliação (UPE)</span>
+                </button>
+              </div>
+              <span class="form-error-msg" id="err-wa-interest" role="alert">Selecione ENEM ou SSA para continuar.</span>
+            </div>
+            <div class="step-actions step-actions--split">
+              <button type="button" class="btn btn--ghost-dark" id="wa-prev-2">← Voltar</button>
+              <button type="button" class="btn btn--primary btn--lg" id="wa-next-2" style="flex:1;justify-content:center;">CONTINUAR →</button>
+            </div>
+          </div>
+
+          <!-- ETAPA 3: ANO ESCOLAR EM 2027 (CONDICIONAL) -->
+          <div class="form-step" data-step="3">
+            <div class="form-group">
+              <label>Qual será seu ano na escola em 2027? <span class="required">*</span></label>
+              <div class="choice-grid" id="choice-year"></div>
+              <span class="form-error-msg" id="err-wa-year" role="alert">Selecione seu ano escolar em 2027.</span>
+            </div>
+            <div class="step-actions step-actions--split">
+              <button type="button" class="btn btn--ghost-dark" id="wa-prev-3">← Voltar</button>
+              <button type="button" class="btn btn--primary btn--lg" id="wa-next-3" style="flex:1;justify-content:center;">CONTINUAR →</button>
+            </div>
+          </div>
+
+          <!-- ETAPA 4: MODALIDADE -->
+          <div class="form-step" data-step="4">
+            <div class="form-group">
+              <label>Qual modalidade você prefere? <span class="required">*</span></label>
+              <div class="choice-grid" id="choice-modality">
+                <button type="button" class="choice-card" data-value="online">
+                  <span class="choice-card__title">Online</span>
+                  <span class="choice-card__sub">Estude de onde estiver com acompanhamento completo</span>
+                </button>
+                <button type="button" class="choice-card" data-value="presencial">
+                  <span class="choice-card__title">Presencial</span>
+                  <span class="choice-card__sub">Aulas presenciais com nossa equipe na Oficina</span>
+                </button>
+              </div>
+              <span class="form-error-msg" id="err-wa-modality" role="alert">Selecione Online ou Presencial.</span>
+            </div>
+            <div class="step-actions step-actions--split">
+              <button type="button" class="btn btn--ghost-dark" id="wa-prev-4">← Voltar</button>
+              <button type="button" class="btn btn--primary btn--lg" id="wa-next-4" style="flex:1;justify-content:center;">CONTINUAR →</button>
+            </div>
+          </div>
+
+          <!-- ETAPA 5: REDE DE ENSINO (ORDEM CONDICIONAL) -->
+          <div class="form-step" data-step="5">
+            <div class="form-group">
+              <label>Você é estudante de qual rede de ensino? <span class="required">*</span></label>
+              <div class="choice-grid" id="choice-network"></div>
+              <span class="form-error-msg" id="err-wa-network" role="alert">Selecione sua rede de ensino.</span>
+            </div>
+
+            <div class="alert alert--error" id="wa-alert-error" role="alert">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span id="wa-alert-error-msg">Ocorreu um erro. Tente novamente.</span>
+            </div>
+
+            <div class="step-actions step-actions--split">
+              <button type="button" class="btn btn--ghost-dark" id="wa-prev-5">← Voltar</button>
+              <button type="submit" class="btn btn--primary btn--lg" id="wa-submit-btn" style="flex:1;justify-content:center;">
+                <span class="btn-text">FINALIZAR E IR PARA WHATSAPP</span>
+                <span class="spinner" style="display:none;" id="wa-submit-spinner"></span>
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+        <!-- TELA DE SUCESSO + FALLBACK WHATSAPP -->
+        <div class="success-screen" id="wa-success-screen" aria-live="polite">
+          <div class="success-icon" aria-hidden="true">
+            <svg width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <h3>Cadastro salvo com sucesso!</h3>
+          <p>Estamos redirecionando você para o nosso WhatsApp com suas informações preenchidas.</p>
+          <a id="wa-fallback-link" href="#" target="_blank" rel="noopener" class="btn btn--primary btn--lg" style="margin-top:.5rem;">
+            ABRIR WHATSAPP AGORA
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__logo-wrap">
+          <img src="assets/images/logo-white.png" alt="Oficina de Estudos" class="footer__logo-img" />
+        </div>
+        <p class="footer__desc">Transformando a forma como você estuda, com acompanhamento estratégico para ENEM e SSA.</p>
+      </div>
+      <div class="footer__col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#questionario">Atendimento WhatsApp</a></li>
+          <li><a href="index.html">Material Gratuito (E-mail)</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacidade.html">Política de Privacidade</a></li>
+          <li><a href="termos.html">Termos de Uso</a></li>
+          <li><a href="privacidade.html#cookies">Política de Cookies</a></li>
+          <li><a href="privacidade.html#exclusao">Exclusão de Dados (LGPD)</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; <span id="footer-year"></span> Oficina de Estudos. Todos os direitos reservados.</span>
+      <div style="display:flex;gap:1.25rem;flex-wrap:wrap;">
+        <a href="privacidade.html">Política de Privacidade</a>
+        <a href="termos.html">Termos de Uso</a>
+        <a href="#" id="manage-cookies-btn">Gerenciar Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/whatsapp-funnel.js"></script>
+<script src="assets/js/cookies.js"></script>
+<script>
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const mainNav = document.getElementById('main-nav');
+  if (hamburgerBtn && mainNav) {
+    hamburgerBtn.addEventListener('click', () => {
+      const isOpen = mainNav.classList.toggle('open');
+      hamburgerBtn.setAttribute('aria-expanded', isOpen.toString());
+    });
+  }
+  const fy = document.getElementById('footer-year');
+  if (fy) fy.textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

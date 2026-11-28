@@ -128,6 +128,37 @@
           <div class="stat-card__value" id="stat-active-campaigns">—</div>
           <div class="stat-card__sub">campanhas em andamento</div>
         </div>
+        <div class="stat-card stat-card--green">
+          <div class="stat-card__icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></div>
+          <div class="stat-card__label">Funil WhatsApp</div>
+          <div class="stat-card__value" id="stat-wa-leads">—</div>
+          <div class="stat-card__sub" id="stat-interest-sub">ENEM / SSA</div>
+        </div>
+        <div class="stat-card stat-card--blue">
+          <div class="stat-card__icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/></svg></div>
+          <div class="stat-card__label">Funil E-mail</div>
+          <div class="stat-card__value" id="stat-email-leads">—</div>
+          <div class="stat-card__sub">captados por material</div>
+        </div>
+      </div>
+
+      <!-- Segmentation Row -->
+      <div class="stats-grid" style="margin-bottom:2rem;">
+        <div class="stat-card stat-card--yellow">
+          <div class="stat-card__label">Interesse (WhatsApp)</div>
+          <div class="stat-card__value" style="font-size:1.35rem;" id="stat-enem-ssa">—</div>
+          <div class="stat-card__sub">ENEM vs SSA</div>
+        </div>
+        <div class="stat-card stat-card--blue">
+          <div class="stat-card__label">Modalidade (WhatsApp)</div>
+          <div class="stat-card__value" style="font-size:1.35rem;" id="stat-modality">—</div>
+          <div class="stat-card__sub">Online vs Presencial</div>
+        </div>
+        <div class="stat-card stat-card--green">
+          <div class="stat-card__label">Rede de Ensino (WhatsApp)</div>
+          <div class="stat-card__value" style="font-size:1.35rem;" id="stat-network">—</div>
+          <div class="stat-card__sub">Pública vs Particular</div>
+        </div>
       </div>
 
       <!-- Charts row -->
@@ -232,6 +263,28 @@
       .eq('is_active', true);
     document.getElementById('stat-active-campaigns').textContent = activeCamp ?? 0;
 
+    // Funnel & segmentation breakdown
+    const { data: allLeadMeta } = await sb
+      .from('leads')
+      .select('origin, interest, modality, school_network');
+
+    const leadsMeta = allLeadMeta || [];
+    const waLeads = leadsMeta.filter(l => l.origin === 'whatsapp');
+    const emailLeads = leadsMeta.filter(l => l.origin !== 'whatsapp');
+    const enemCount = waLeads.filter(l => l.interest === 'enem').length;
+    const ssaCount = waLeads.filter(l => l.interest === 'ssa').length;
+    const onlineCount = waLeads.filter(l => l.modality === 'online').length;
+    const presCount = waLeads.filter(l => l.modality === 'presencial').length;
+    const pubCount = waLeads.filter(l => l.school_network === 'publica').length;
+    const partCount = waLeads.filter(l => l.school_network === 'particular').length;
+
+    document.getElementById('stat-wa-leads').textContent = waLeads.length;
+    document.getElementById('stat-email-leads').textContent = emailLeads.length;
+    document.getElementById('stat-interest-sub').textContent = `${enemCount} ENEM · ${ssaCount} SSA`;
+    document.getElementById('stat-enem-ssa').textContent = `${enemCount} ENEM / ${ssaCount} SSA`;
+    document.getElementById('stat-modality').textContent = `${onlineCount} Online / ${presCount} Presencial`;
+    document.getElementById('stat-network').textContent = `${pubCount} Pública / ${partCount} Particular`;
+
     // Draw sends chart
     drawBarChart('chart-sends',
       ['Enviado', 'Pendente', 'Falhou'],
@@ -259,7 +312,7 @@
   // ---- Recent leads ----
   async function loadRecentLeads() {
     const { data } = await sb.from('leads')
-      .select('id, name, email, phone, created_at, campaign_id, campaigns(name), email_sends(status)')
+      .select('id, name, email, phone, created_at, origin, interest, campaign_id, campaigns(name), email_sends(status)')
       .order('created_at', { ascending: false })
       .limit(8);
 
@@ -270,8 +323,12 @@
     }
 
     tbody.innerHTML = data.map(lead => {
+      const isWa = lead.origin === 'whatsapp';
       const latestSend = lead.email_sends?.[lead.email_sends.length - 1];
-      const status = latestSend?.status || 'pending';
+      const statusCell = isWa ? '<span style="color:var(--gray-text);font-size:.82rem;">—</span>' : statusBadge(latestSend?.status || 'pending');
+      const originTag = isWa
+        ? `<span class="origin-badge origin-badge--whatsapp">WhatsApp${lead.interest ? ' · ' + lead.interest.toUpperCase() : ''}</span>`
+        : `<span class="origin-badge origin-badge--email">E-mail</span>`;
       const phone = lead.phone || '—';
       const wa = lead.phone ? `<a href="${whatsAppLink(phone)}" target="_blank" rel="noopener" class="btn btn--sm btn--ghost" title="Chamar no WhatsApp" style="padding:.25rem .5rem;font-size:.75rem;gap:.25rem;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="color:#25d366;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -282,9 +339,9 @@
         <td><strong>${lead.name}</strong></td>
         <td style="font-size:.85rem;">${lead.email}</td>
         <td style="font-size:.85rem;">${phone} ${wa}</td>
-        <td style="font-size:.82rem;">${lead.campaigns?.name || '—'}</td>
+        <td style="font-size:.82rem;">${originTag} ${lead.campaigns?.name ? '· ' + lead.campaigns.name : ''}</td>
         <td style="font-size:.82rem;">${fmtDate(lead.created_at)}</td>
-        <td>${statusBadge(status)}</td>
+        <td>${statusCell}</td>
       </tr>`;
     }).join('');
   }
